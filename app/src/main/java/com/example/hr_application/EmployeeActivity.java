@@ -61,7 +61,14 @@ public class EmployeeActivity extends AppCompatActivity {
                 modelArrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     final employeesModel user = dataSnapshot.getValue(employeesModel.class);
-                    modelArrayList.add(new employeesModel(user.getImageUrl(),user.getUsername(),user.getNumber(),user.getDeveloper(),user.getUserid()));
+                    if (i.getStringExtra("status").equals("Admin")) {
+                        modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
+                    }
+                    if(i.getStringExtra("status").equals("HR")){
+                        if(!(user.getDeveloper().equals("HR")||user.getDeveloper().equals("Admin"))){
+                            modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
+                        }
+                    }
                 }
                 mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList);
                 mRecyclerView.setAdapter(mAdapter);

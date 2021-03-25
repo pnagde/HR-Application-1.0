@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,7 +113,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loading=(LottieAnimationView) findViewById(R.id.loadingAnimation);
         loadingC=(LottieAnimationView) findViewById(R.id.loadingAnimationC);
         empty=(LottieAnimationView) findViewById(R.id.empty);
-
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
+        if(!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
+            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
+            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
+            Button retry = view.findViewById(R.id.retryBtn);
+            TextView heading = view.findViewById(R.id.dialog_heading);
+            heading.setText("Not Connection to Network");
+            alert.setView(view);
+            final AlertDialog alertDialog = alert.create();
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                }
+            });
+            alertDialog.show();
+        }
+        if(!internetIsConnected()){
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
+            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
+            Button retry = view.findViewById(R.id.retryBtn);
+            TextView heading = view.findViewById(R.id.dialog_heading);
+            heading.setText("No Internet Connection");
+            alert.setView(view);
+            final AlertDialog alertDialog = alert.create();
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                }
+            });
+            alertDialog.show();
+        }
         customCalendar = findViewById(R.id.custom_calender);
         taskRecyclerView = findViewById(R.id.taskRecyclerView);
         toolbar = (Toolbar) findViewById(R.id.main_tool_bar_);
@@ -595,5 +632,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            done.playAnimation();
 //        }
 //    }
-
+public boolean internetIsConnected() {
+    try {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec(command).waitFor() == 0);
+    } catch (Exception e) {
+        return false;
+    }
+}
 }
