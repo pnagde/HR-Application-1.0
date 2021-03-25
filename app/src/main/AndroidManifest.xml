@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HRApplication">
-        <activity android:name=".ComposeFeed"></activity>
+        <activity android:name=".TeamDeskListActivity"></activity>
+        <activity android:name=".ComposeFeed" />
         <activity android:name=".NewsFeed" />
-        <activity android:name=".TeamDeskActivity"></activity>
-
+        <activity android:name=".TeamDeskActivity" />
         <activity android:name=".AllLeaveRecordsActivity" />
         <activity android:name=".Splash">
             <intent-filter>
