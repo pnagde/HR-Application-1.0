@@ -113,32 +113,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loading=(LottieAnimationView) findViewById(R.id.loadingAnimation);
         loadingC=(LottieAnimationView) findViewById(R.id.loadingAnimationC);
         empty=(LottieAnimationView) findViewById(R.id.empty);
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
-        if(!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+//        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
+//        if(!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+//            Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
+//            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
+//            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
+//            Button retry = view.findViewById(R.id.retryBtn);
+//            TextView heading = view.findViewById(R.id.dialog_heading);
+//            heading.setText("Not Connection to Network");
+//            alert.setView(view);
+//            final AlertDialog alertDialog = alert.create();
+//            retry.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+//                }
+//            });
+//            alertDialog.show();
+//        }
+//        if(!internetIsConnected()){
+//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
+//            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
+//            Button retry = view.findViewById(R.id.retryBtn);
+//            TextView heading = view.findViewById(R.id.dialog_heading);
+//            heading.setText("No Internet Connection");
+//            alert.setView(view);
+//            final AlertDialog alertDialog = alert.create();
+//            retry.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+//                }
+//            });
+//            alertDialog.show();
+//        }
+        if(!isOnline()){
             Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
             final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
             View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
             Button retry = view.findViewById(R.id.retryBtn);
             TextView heading = view.findViewById(R.id.dialog_heading);
             heading.setText("Not Connection to Network");
-            alert.setView(view);
-            final AlertDialog alertDialog = alert.create();
-            retry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this,MainActivity.class));
-                }
-            });
-            alertDialog.show();
-        }
-        if(!internetIsConnected()){
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
-            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
-            Button retry = view.findViewById(R.id.retryBtn);
-            TextView heading = view.findViewById(R.id.dialog_heading);
-            heading.setText("No Internet Connection");
             alert.setView(view);
             final AlertDialog alertDialog = alert.create();
             retry.setOnClickListener(new View.OnClickListener() {
@@ -601,7 +618,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void EmptyListAnimation() throws InterruptedException {
-        sleep(1100);
+//        sleep(1100);
         if (taskList.isEmpty()) {
             empty.setVisibility(View.VISIBLE);
             empty.setSpeed(1);
@@ -640,4 +657,14 @@ public boolean internetIsConnected() {
         return false;
     }
 }
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(this, "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
 }
