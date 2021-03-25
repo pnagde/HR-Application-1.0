@@ -38,7 +38,7 @@
                 android:text="Username"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:textColor="@color/DarkText"
+                android:textColor="@color/darkBlue"
                 android:maxLines="1"/>
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Android Developer"
                 android:layout_weight="1"
-                android:textColor="@color/DarkText"
+                android:textColor="@color/darkBlue"
                 android:maxLines="1"/>
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/DarkText"
+                android:textColor="@color/darkBlue"
                 android:text="Mobile Number"
                 android:maxLines="1"/>
         </LinearLayout>

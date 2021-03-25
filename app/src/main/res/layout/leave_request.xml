@@ -27,8 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username"
+            android:textColorHint="@color/darkBlue"
             android:textStyle="bold"
-            android:textColor="@color/DarkText"
+            android:textColor="@color/darkBlue"
             android:maxLines="1"
             android:layout_marginBottom="5dp"/>
 
@@ -43,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FROM"
-                android:textColor="@color/LightTxt"
+                android:textColor="@color/darkBlue"
                 android:maxLines="1"/>
 
             <TextView
@@ -59,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TO"
-                android:textColor="@color/LightTxt"
+                android:textColor="@color/darkBlue"
                 android:layout_marginStart="20dp"
                 android:maxLines="1"/>
             <TextView
@@ -80,8 +81,9 @@
             android:layout_marginEnd="10dp"
             android:hint="Reason"
             android:textSize="18dp"
+            android:textColorHint="@color/darkBlue"
             android:fontFamily="@font/alegreya_sans_sc_medium"
-            android:textColor="@color/neu"/>
+            android:textColor="@color/darkBlue"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,9 +97,10 @@
                 android:layout_marginEnd="10dp"
                 android:hint="approve"
                 android:textSize="18sp"
+                android:textColorHint="@color/darkBlue"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
-                android:textColor="@color/neu"/>
+                android:textColor="@color/darkBlue"/>
             <Button
                 android:id="@+id/accept"
                 android:layout_width="wrap_content"
@@ -105,6 +108,7 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/btn_background"
                 android:text="Accept"
+                android:textColor="@color/white"
                 android:layout_weight="1"/>
             <Button
                 android:id="@+id/decline"
@@ -113,12 +117,15 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/btn_background"
                 android:text="Decline"
+                android:textColor="@color/white"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/timeApproved"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="1/1/2000"
+                android:textColorHint="@color/darkBlue"
+                android:textColor="@color/darkBlue"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textSize="16sp" />

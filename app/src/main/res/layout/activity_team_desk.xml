@@ -18,7 +18,7 @@
         android:text="TEAM NAME"
         android:textSize="30dp"
         android:fontFamily="@font/alegreya_sans_sc_medium"
-        android:textColor="@color/neu"/>
+        android:textColor="@color/darkBlue"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Leader :"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBlue"
             android:textSize="27dp"
             android:layout_marginStart="20dp"/>
 
@@ -49,7 +49,7 @@
             android:layout_marginStart="10dp"
             android:fontFamily="@font/alegreya_sans_sc_medium"
             android:text="NO FOUND"
-            android:textColor="@color/neu"
+            android:textColor="@color/darkBlue"
             android:textSize="30dp" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_marginStart="20dp"
             android:layout_below="@id/leader"
             android:text="Meeting Link :"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBlue"
             android:textSize="27dp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@id/meet"
             android:text="NO FOUND"
-            android:textColor="@color/black" />
+            android:textColor="@color/darkBlue" />
         <TextView
             android:id="@+id/meet1"
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_marginStart="20dp"
             android:layout_below="@id/meet"
             android:text="Meeting Time :"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBlue"
             android:textSize="27dp" />
         <TextView
             android:id="@+id/meetingTime"
@@ -93,7 +93,7 @@
             android:layout_below="@id/meetingLink"
             android:text="NO TIME"
             android:textSize="20dp"
-            android:textColor="@color/black"
+            android:textColor="@color/darkBlue"
             android:layout_marginTop="25dp"
             android:layout_marginStart="10dp"/>
     </RelativeLayout>
@@ -101,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Members :"
-        android:textColor="@color/black"
+        android:textColor="@color/darkBlue"
         android:textSize="27dp"
         android:layout_marginStart="20dp"/>
     <androidx.recyclerview.widget.RecyclerView

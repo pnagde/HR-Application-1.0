@@ -4,5 +4,5 @@
 <item android:id="@+id/news"
     android:title="news"
     app:showAsAction="ifRoom"
-    android:icon="@drawable/ic_newsfeed"/>
+    android:icon="@drawable/ic_news_"/>
 </menu>

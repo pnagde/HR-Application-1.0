@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         android:text="E-City Vibes"
-        android:textColor="@color/neu"
+        android:textColor="@color/white"
         android:layout_marginTop="5dp"
         android:textSize="24sp" />
     <TextView
@@ -30,7 +30,7 @@
         android:fontFamily="monospace"
         android:text="ecv.hire@gmail.com"
         android:layout_marginTop="5dp"
-        android:textColor="@color/neu"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
 </LinearLayout>

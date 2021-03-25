@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView taskRecyclerView;
     TaskAdapter taskAdapter;
     Calendar calendar = Calendar.getInstance();
-    ;
     ArrayList<String> time = new ArrayList<>();
     ArrayList<TaskModel> taskList = new ArrayList<>();
     boolean doubleBackToExitPressedOnce = false;
@@ -113,42 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loading=(LottieAnimationView) findViewById(R.id.loadingAnimation);
         loadingC=(LottieAnimationView) findViewById(R.id.loadingAnimationC);
         empty=(LottieAnimationView) findViewById(R.id.empty);
-//        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
-//        if(!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-//                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
-//            Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
-//            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
-//            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
-//            Button retry = view.findViewById(R.id.retryBtn);
-//            TextView heading = view.findViewById(R.id.dialog_heading);
-//            heading.setText("Not Connection to Network");
-//            alert.setView(view);
-//            final AlertDialog alertDialog = alert.create();
-//            retry.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(MainActivity.this,MainActivity.class));
-//                }
-//            });
-//            alertDialog.show();
-//        }
-//        if(!internetIsConnected()){
-//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-//            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
-//            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
-//            Button retry = view.findViewById(R.id.retryBtn);
-//            TextView heading = view.findViewById(R.id.dialog_heading);
-//            heading.setText("No Internet Connection");
-//            alert.setView(view);
-//            final AlertDialog alertDialog = alert.create();
-//            retry.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(MainActivity.this,MainActivity.class));
-//                }
-//            });
-//            alertDialog.show();
-//        }
         if(!isOnline()){
             Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
             final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
@@ -273,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            String name = (snapshot.child("username").getValue()).toString().trim();
-                            nameUser.setText(name);
-                            navHeaderName.setText(name);
+                            String[] name = (snapshot.child("username").getValue()).toString().trim().split(" ");
+                            nameUser.setText("Hi "+name[0]+"!");
+                            navHeaderName.setText(name[0]+" "+name[1]);
                             String email = (snapshot.child("email").getValue()).toString().trim();
                             navHeaderEmail.setText(email);
                             String url = snapshot.child("ImageUrl").getValue().toString();
@@ -300,7 +263,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void supportToolbar() {
+    private void supportToolbar()
+    {
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, mDrawer, R.string.open, R.string.close);
         navigationView.setNavigationItemSelectedListener(this);
@@ -561,20 +525,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     attendanceModel model = snapshot.getValue(attendanceModel.class);
                     String[] month = model.getDate().split("/");//don't touch it
                     Log.d(TAG, "onDataChange: month" + (Integer.parseInt(month[1]) - 1) + "=" + (calendar.get((Calendar.MONTH))));
-
-// <<<<<<< VinayLeaveApplication
-//                     if(Integer.parseInt(month[1])==calendar.get(Calendar.MONTH)+1){
-//                         date.add(model.getDate());
-//                     }
-//                     if(date!=null) {
-//                         for (int i = 1; i < date.size(); i++)
-//                         {
-// =======
                     if (Integer.parseInt(month[1]) == calendar.get(Calendar.MONTH) + 1)
                         date.add(model.getDate());
                     if (date != null) {
                         for (int i = 1; i < date.size(); i++) {
-// >>>>>>> master
+
                             String[] m = date.get(i).split("/");
                             Log.d(TAG, "onDataChange: " + m[0]);
                             dateHashMap.put(Integer.parseInt(m[0]), "p");
@@ -593,18 +548,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-// <<<<<<< VinayLeaveApplication
-//     public void PlayDone(){
-//         LottieAnimationView done = findViewById(R.id.doneAnimation);
-//         done.setVisibility(View.VISIBLE);
-//         done.setSpeed(1);
-//         done.playAnimation();
-//     }
-// =======
-//    public void PlayDone(){
-//
-//    }
-// >>>>>>> master
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -633,30 +576,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
     }
 
-//    public void PlayDone(View view) {
-//        LottieAnimationView done=(LottieAnimationView) findViewById(R.id.doneAnimation_);
-//        if (done!=null){
-//            done.setVisibility(View.VISIBLE);
-//        }
-//    }
-
-//    @Override
-//    public void playDone() {
-//        LottieAnimationView done=(LottieAnimationView) findViewById(R.id.doneAnimation_);
-//        if (done!=null){
-//            done.setVisibility(View.VISIBLE);
-//            done.setSpeed(1);
-//            done.playAnimation();
-//        }
-//    }
-public boolean internetIsConnected() {
-    try {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec(command).waitFor() == 0);
-    } catch (Exception e) {
-        return false;
-    }
-}
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();

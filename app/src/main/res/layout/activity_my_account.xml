@@ -38,7 +38,7 @@
                 android:layout_below="@id/profileImage"
                 android:text="E-City Vibes"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="24sp"
                 />
             <View
@@ -70,7 +70,7 @@
                 android:layout_toRightOf="@id/userIcon"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
                 android:text="E-City Vibes"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="24sp" />
             <EditText
                 android:id="@+id/editName"
@@ -106,7 +106,7 @@
                 android:fontFamily="monospace"
                 android:singleLine="true"
                 android:text="ecv.hire@gmail.com"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="14sp" />
             <EditText
                 android:id="@+id/editEmailId"
@@ -141,7 +141,7 @@
                 android:fontFamily="monospace"
                 android:singleLine="true"
                 android:text="1234567890"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="14sp" />
             <EditText
                 android:id="@+id/editPhoneNumber"
@@ -176,7 +176,7 @@
                 android:fontFamily="monospace"
                 android:singleLine="true"
                 android:text="8-9-2000"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="14sp"/>
             <EditText
                 android:id="@+id/editDob"
@@ -211,7 +211,7 @@
                 android:fontFamily="monospace"
                 android:singleLine="true"
                 android:text="Developer"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="14sp"/>
             <EditText
                 android:id="@+id/editDeveloper"
@@ -255,7 +255,7 @@
                 android:layout_toEndOf="@+id/taskIcon"
                 android:fontFamily="monospace"
                 android:text="@string/task_completed"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="18sp" />
 
             <TextView
@@ -267,7 +267,7 @@
                 android:layout_toEndOf="@+id/taskCompleted"
                 android:fontFamily="monospace"
                 android:text="50%"
-                android:textColor="@color/neu"
+                android:textColor="@color/darkBlue"
                 android:textSize="18sp" />
 <!--            <ImageView-->
 <!--                android:id="@+id/attendanceIcon"-->
@@ -324,6 +324,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:layout_marginEnd="9dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/btn_background"
@@ -334,6 +335,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:layout_marginEnd="9dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/btn_background"
@@ -344,6 +346,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:background="@drawable/btn_background"
                     android:text="@string/edit_profile"
                     android:visibility="visible" />
