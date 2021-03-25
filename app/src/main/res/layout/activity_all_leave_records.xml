@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AllLeaveRecordsActivity"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <include layout="@layout/custom_toolbar"
+        android:id="@+id/account_tool"/>
+
+
+<!--    <EditText-->
+<!--        android:id="@+id/filterLeave"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:inputType="text"-->
+<!--        android:imeOptions="actionDone"-->
+<!--        android:background="@drawable/leave_background"-->
+<!--        android:hint="@string/search_employees"-->
+<!--        android:paddingStart="15dp"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:paddingBottom="5dp"-->
+<!--        android:paddingEnd="15dp"-->
+<!--        android:textColor="@color/DarkText"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textSize="30sp"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leaveRecord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

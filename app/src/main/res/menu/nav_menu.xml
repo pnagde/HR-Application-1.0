@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/myAccount"
+        android:title="My Account"
+        android:icon="@drawable/ic_myaccount"/>
+
+    <item
+        android:id="@+id/dashboard"
+        android:title="Dashboard"
+        android:checked="true"
+        android:icon="@drawable/ic_dashboard"/>
+
+    <item
+        android:id="@+id/attendance"
+        android:title="Attendance"
+        android:icon="@drawable/ic_attendance"/>
+
+    <item
+        android:visible="false"
+        android:id="@+id/employees"
+        android:title="Employees"
+        android:icon="@drawable/ic_employee"/>
+
+    <item
+        android:visible="false"
+        android:id="@+id/uploadTask"
+        android:title="Assign Task"
+        android:icon="@drawable/ic_assign_tasks"/>
+    <item
+        android:id="@+id/applyForLeave"
+        android:title="Apply for Leave"
+        android:icon="@drawable/ic_apply_for_leave"/>
+    <item
+        android:visible="false"
+        android:id="@+id/grantLeave"
+        android:title="Leave Applications"
+        android:icon="@drawable/ic_leave_application"/>
+    <item
+        android:visible="false"
+        android:id="@+id/createTeam"
+        android:title="Create Team"
+        android:icon="@drawable/ic_employee"/>
+    <item
+        android:visible="true"
+        android:id="@+id/teamDesk"
+        android:title="Team Desk"
+        android:icon="@drawable/ic_team_desk"/>
+    <item
+        android:visible="false"
+        android:id="@+id/meet_update"
+        android:title="Update Meet"
+        android:icon="@drawable/logo_meet"/>
+    <item
+        android:id="@+id/refer"
+        android:title="Refer"
+        android:icon="@drawable/ic_check_mark"/>
+    <item android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_logout"/>
+</menu>

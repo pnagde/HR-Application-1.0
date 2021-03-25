@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    android:id="@+id/employeeLayout"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userPic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_circle"
+            android:contentDescription="TODO" />
+
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/employeeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textColor="@color/DarkText"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/employeeType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android Developer"
+                android:layout_weight="1"
+                android:textColor="@color/DarkText"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/employeeNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/DarkText"
+                android:text="Mobile Number"
+                android:maxLines="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
