@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import java.util.Collections;
 
 public class AllLeaveRecordsActivity extends AppCompatActivity {
 
+    private static final String TAG ="AllLeaveActivity" ;
     private Toolbar toolbar;
     private ArrayList<responseModel> allLeave;
     private RecyclerView mRecyclerView;
@@ -76,22 +78,22 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
         });
     }
 
-    private void processSearch(String name) {
-        Toast.makeText(this, "Under ProcessSearch", Toast.LENGTH_SHORT).show();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("grantLeave");
-                Query query =(databaseReference.orderByChild("name").startAt(name).equalTo(name));
+    private void processSearch(String username) {
+        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("grantLeave");
+                Query query =(d.orderByChild("name").startAt(username).endAt(username+"\uf8ff"));
                 query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Toast.makeText(AllLeaveRecordsActivity.this, "Under on DataChanged", Toast.LENGTH_SHORT).show();
                         allLeave.clear();
                         for (DataSnapshot snapshot1:snapshot.getChildren()){
                             for (DataSnapshot snapshot2:snapshot1.getChildren()){
                                 responseModel model = snapshot2.getValue(responseModel.class);
+                                String a=model.getName();
+                                Log.d(TAG, "onDataChange:"+a);
                                 allLeave.add(model);
                             }
                         }
-//                        Collections.reverse(allLeave);
+                        Collections.reverse(allLeave);
                         mAdapter = new allLeaveRecordAdapter(AllLeaveRecordsActivity.this, allLeave);
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -101,6 +103,7 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                        error.getDetails();
             }
         });
     }
@@ -119,11 +122,11 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                processSearch(newText);
+                    processSearch(newText);
                 return false;
             }
         });
-        return true;
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
