@@ -102,7 +102,9 @@ public class EmployeeActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchEmployee(newText);
+                if (searchView.getQuery().length() != 0) {
+                    searchEmployee(newText);
+                }
                 return false;
             }
         });
@@ -112,7 +114,7 @@ public class EmployeeActivity extends AppCompatActivity {
     private void searchEmployee(String query) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        Query query1 = (reference.orderByChild("username").equalTo(query));
+        Query query1 = (reference.orderByChild("username").startAt(query).endAt(query+"\uf8ff"));
 //        Query query1  = (reference.orderByChild("username").startAt(query).equalTo(query).endAt(query+"\uf8ff"));
         query1.addValueEventListener(new ValueEventListener() {
             @Override

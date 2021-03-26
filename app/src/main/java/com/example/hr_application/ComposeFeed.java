@@ -107,7 +107,7 @@ public class ComposeFeed extends AppCompatActivity {
     private void supportTool()
     {
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Compose News Feed");
+        getSupportActionBar().setTitle("Compose News Feed");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }

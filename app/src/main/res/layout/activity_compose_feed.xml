@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:padding="16dp"
         android:textColorHint="@color/darkBlue"
         android:hint="Write here Content"
         android:gravity="top"
