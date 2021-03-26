@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/logo_ecv"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/crewlogo"
         android:fontFamily="@font/alegreya_sans_sc_medium"
-        android:src="@drawable/ecvcrew_logo"
+        android:src="@drawable/crew_bg_rev"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

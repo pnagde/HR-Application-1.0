@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.AdapterListUpdateCallback;
@@ -65,12 +66,12 @@ import java.util.Objects;
 
 import static java.lang.Thread.sleep;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
     private final String textMeetNo = "no time mention";
-    private TextView headerName, headerEmail, todayDate, nameUser,navHeaderName,navHeaderEmail;
-    private ImageView profile,navProfile;
+    private TextView headerName, headerEmail, todayDate, nameUser, navHeaderName, navHeaderEmail;
+    private ImageView profile, navProfile;
     private DrawerLayout mDrawer;
     private attendanceAdapter attendanceAdapter;
     private ActionBarDrawerToggle toggle;
@@ -82,9 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button checkoutbtn, checkinbtn;
     private CustomCalendar customCalendar;
     private int month, year;
+    CustomLoadingClass cl;
     private String status;
     LottieAnimationView done;
-    private LottieAnimationView loading,loadingC,empty;
+    private LottieAnimationView loading, loadingC, empty;
     private ArrayList<String> date = new ArrayList<>();
 
     RecyclerView taskRecyclerView;
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<TaskModel> taskList = new ArrayList<>();
     boolean doubleBackToExitPressedOnce = false;
     public Toolbar toolbar;
+    private CardView cardView;
     private HashMap<Integer, Object> dateHashMap = null;
 
     @SuppressLint("SetTextI18n")
@@ -104,18 +107,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendar = Calendar.getInstance();
         checkin = findViewById(R.id.checkin);
         checkout = findViewById(R.id.checkout);
+        cardView=(CardView)findViewById(R.id.cardView2);
         checkinIndicator = findViewById(R.id.checkinIndicator);
         checkoutIndicator = findViewById(R.id.checkoutIndicator);
         checkinbtn = findViewById(R.id.inbtn);
         checkoutbtn = findViewById(R.id.outBtn);
-        done=(LottieAnimationView) findViewById(R.id.doneAnimation_);
-        loading=(LottieAnimationView) findViewById(R.id.loadingAnimation);
-        loadingC=(LottieAnimationView) findViewById(R.id.loadingAnimationC);
-        empty=(LottieAnimationView) findViewById(R.id.empty);
-        if(!isOnline()){
+        done = (LottieAnimationView) findViewById(R.id.doneAnimation_);
+        loading = (LottieAnimationView) findViewById(R.id.loadingAnimation);
+        loadingC = (LottieAnimationView) findViewById(R.id.loadingAnimationC);
+        empty = (LottieAnimationView) findViewById(R.id.empty);
+        cl=new CustomLoadingClass(MainActivity.this);
+        cl.show();
+        if (!isOnline()) {
             Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
-            final AlertDialog.Builder alert= new AlertDialog.Builder(MainActivity.this);
-            View view = getLayoutInflater().inflate(R.layout.internet_dialog,null);
+            final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+            View view = getLayoutInflater().inflate(R.layout.internet_dialog, null);
             Button retry = view.findViewById(R.id.retryBtn);
             TextView heading = view.findViewById(R.id.dialog_heading);
             heading.setText("Not Connection to Network");
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             retry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
                 }
             });
             alertDialog.show();
@@ -169,8 +175,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         HideMenu();
         Calendar todayDateView = Calendar.getInstance();
-        String[] a=todayDateView.getTime().toString().split(" ");
-        todayDate.setText(a[0]+"\n"+a[1]+" "+a[2]+" "+a[5]);
+        String[] a = todayDateView.getTime().toString().split(" ");
+        todayDate.setText(a[0] + "\n" + a[1] + " " + a[2] + " " + a[5]);
         checkoutbtn.setOnClickListener(v -> {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("attendance").push();
             HashMap<String, String> hashMap = new HashMap<>();
@@ -237,8 +243,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             String[] name = (snapshot.child("username").getValue()).toString().trim().split(" ");
-                            nameUser.setText("Hi "+name[0]+"!");
-                            navHeaderName.setText(name[0]+" "+name[1]);
+                            nameUser.setText("Hi " + name[0] + "!");
+                            if (name.length > 1) {
+                                navHeaderName.setText(name[0] + " " + name[1]);
+                            } else navHeaderName.setText(name[0] + "");
                             String email = (snapshot.child("email").getValue()).toString().trim();
                             navHeaderEmail.setText(email);
                             String url = snapshot.child("ImageUrl").getValue().toString();
@@ -258,13 +266,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             Glide.with(this).load(url).placeholder(R.drawable.logo_circle).into(profile);
             Glide.with(this).load(url).placeholder(R.drawable.logo_circle).into(navProfile);
+            cl.dismiss();
         } catch (Exception e) {
             e.getStackTrace();
         }
     }
 
-    private void supportToolbar()
-    {
+    private void supportToolbar() {
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, mDrawer, R.string.open, R.string.close);
         navigationView.setNavigationItemSelectedListener(this);
@@ -338,19 +346,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
+        int id = item.getItemId();
         if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
-        if(id==R.id.news)
-        {
+        if (id == R.id.news) {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Intent intent=new Intent(this,NewsFeed.class);
-            intent.putExtra("uid",uid);
+            Intent intent = new Intent(this, NewsFeed.class);
+            intent.putExtra("uid", uid);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void HideMenu() {
         navigationView = (NavigationView) findViewById(R.id.side_navView);
         Menu myMenu = navigationView.getMenu();
@@ -368,20 +376,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("Developer").getValue().equals("HR")){
+                if (snapshot.child("Developer").getValue().equals("HR")) {
                     LeaveApplication.setVisible(true);
                     Employees.setVisible(true);
                     CreateTeam.setVisible(true);
                     UpdateMeet.setVisible(true);
                     UploadTask.setVisible(true);
-                    status="HR";
-                }if((snapshot.child("Developer").getValue().equals("Admin"))){
+                    status = "HR";
+                }
+                if ((snapshot.child("Developer").getValue().equals("Admin"))) {
                     LeaveApplication.setVisible(true);
                     Employees.setVisible(true);
                     CreateTeam.setVisible(true);
                     UpdateMeet.setVisible(true);
                     UploadTask.setVisible(true);
-                    status="Admin";
+                    status = "Admin";
                 }
             }
 
@@ -414,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.employees:
                 Intent intent1 = new Intent(this, EmployeeActivity.class);
-                intent1.putExtra("status",status);
+                intent1.putExtra("status", status);
                 startActivity(intent1);
 //                Toast.makeText(this, "Employees is Clicked", Toast.LENGTH_SHORT).show();
                 break;
@@ -570,7 +579,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             empty.setVisibility(View.GONE);
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -580,7 +588,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(MainActivity.this.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             Toast.makeText(this, "No Internet connection!", Toast.LENGTH_LONG).show();
             return false;
         }
