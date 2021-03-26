@@ -61,16 +61,22 @@
             android:text="Meeting Link :"
             android:textColor="@color/black"
             android:textSize="27dp" />
+
         <TextView
             android:id="@+id/meetingLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/meet"
-            android:layout_below="@id/leaderName"
-            android:text="https://meet.google.com/eff-diwr-ykg"
-            android:textColor="@color/black"
+            android:layout_alignBottom="@+id/meet"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="18dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginBottom="7dp"
+            android:layout_toRightOf="@id/meet"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="https://meet.google.com/eff-diwr-ykg"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/meet1"
             android:layout_width="wrap_content"
@@ -81,17 +87,18 @@
             android:text="Meeting Time :"
             android:textColor="@color/black"
             android:textSize="27dp" />
+
         <TextView
             android:id="@+id/meetingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/meet1"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="10dp"
             android:layout_toRightOf="@id/meet1"
-            android:layout_below="@id/meetingLink"
             android:text="11:00 P.M."
-            android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="10dp"/>
+            android:textSize="20dp" />
     </RelativeLayout>
     <TextView
         android:id="@+id/members"
