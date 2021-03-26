@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.hr_application.adapters.teamDeskAdapter;
 import com.example.hr_application.models.employeesModel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class TeamDeskActivity extends AppCompatActivity {
+public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCustomDialog.DialogListener{
     private Toolbar toolbar;
     private DatabaseReference databaseReference;
     private String teamKey;
@@ -101,8 +101,35 @@ public class TeamDeskActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.updatemenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.update:
+                TeamDeskCustomDialog dialog = new TeamDeskCustomDialog();
+                dialog.show(getSupportFragmentManager(),"CustomDialogBox");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void addDetails(String link, String time) {
+        meetingLink.setText(link);
+        meetingTime.setText(time);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("teams").child(teamKey);
+        HashMap<String , Object> obj = new HashMap<>();
+        obj.put("meetingLink",  link);
+        obj.put("meetingTime",  time);
+        databaseReference.updateChildren(obj);
     }
 }
