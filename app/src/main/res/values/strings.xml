@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ECV-Crew</string>
+    <string name="app_name">ECV Crew</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="in">In</string>
@@ -36,8 +36,8 @@
     <string name="create_a_account">Create a account</string>
     <string name="enter_your_e_mail_id">Enter your E-mail Id</string>
     <string name="create_account">create account</string>
-    <string name="set_a_username">set a username</string>
-    <string name="set_a_password">set a password</string>
+    <string name="set_a_username">Set a username</string>
+    <string name="set_a_password">Set a password</string>
     <string name="message_task">Message/Task</string>
     <string name="enter_task">Enter Task</string>
     <string name="send">Send</string>

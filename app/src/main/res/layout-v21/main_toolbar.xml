@@ -15,9 +15,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="75dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:layout_height="75dp"
         android:contentDescription="@string/crewlogo"
-        android:src="@drawable/ecvcrew_logo" />
+        android:src="@drawable/crew_bg_rev" />
 </androidx.appcompat.widget.Toolbar>
 
