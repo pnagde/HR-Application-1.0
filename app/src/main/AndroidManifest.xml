@@ -38,5 +38,6 @@
         <activity
             android:name=".loginActivity"
             android:theme="@style/Theme.HRApplication" />
+        <activity android:name=".TeamDeskListActivity"/>
     </application>
 </manifest>

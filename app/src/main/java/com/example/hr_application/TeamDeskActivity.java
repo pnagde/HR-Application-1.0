@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hr_application.adapters.teamDeskAdapter;
@@ -28,9 +29,10 @@ import java.util.HashMap;
 public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCustomDialog.DialogListener{
     private Toolbar toolbar;
     private DatabaseReference databaseReference;
-    private String teamKey;
+    private String teamKey,linkML;
     private ArrayList<employeesModel> teamDeskEmployees;
-    private TextView teamName,leaderName,meetingLink,meetingTime;
+    private TextView teamName,leaderName,meetingTime;
+    private ImageView meetingLink;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     @Override
@@ -60,8 +62,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
         meetingLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String link = meetingLink.getText().toString().trim();
-                Uri uri = Uri.parse(link);
+                Uri uri = Uri.parse(linkML);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -80,7 +81,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
                     mT = snapshot.child("meetingTime").getValue(String.class);
                     teamName.setText(tN);
                     leaderName.setText(lN);
-                    meetingLink.setText(mL);
+                    linkML=mL;
                     meetingTime.setText(mT);
                     for (DataSnapshot snapshot1:snapshot.child("members").getChildren()){
                         employeesModel model = snapshot1.getValue(employeesModel.class);
@@ -124,7 +125,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
 
     @Override
     public void addDetails(String link, String time) {
-        meetingLink.setText(link);
+        linkML=link;
         meetingTime.setText(time);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("teams").child(teamKey);
         HashMap<String , Object> obj = new HashMap<>();
