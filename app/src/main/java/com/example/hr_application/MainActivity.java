@@ -250,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String email = (snapshot.child("email").getValue()).toString().trim();
                             navHeaderEmail.setText(email);
                             String url = snapshot.child("ImageUrl").getValue().toString();
-                            Log.d("Shaw", "onDataChange: name " + name);
                             loadImage(url);
                         }
                     }
@@ -533,7 +532,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     attendanceModel model = snapshot.getValue(attendanceModel.class);
                     String[] month = model.getDate().split("/");//don't touch it
-                    Log.d(TAG, "onDataChange: month" + (Integer.parseInt(month[1]) - 1) + "=" + (calendar.get((Calendar.MONTH))));
                     if (Integer.parseInt(month[1]) == calendar.get(Calendar.MONTH) + 1)
                         date.add(model.getDate());
                     if (date != null) {
