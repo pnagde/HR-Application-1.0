@@ -6,12 +6,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ import java.util.Collections;
 public class EmployeeActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
+    Context mContext;
     ArrayList<employeesModel> modelArrayList = new ArrayList<>();
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
@@ -49,11 +53,14 @@ public class EmployeeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         i = getIntent();
         getSupportActionBar().setTitle("Employees");
+        int resId = R.anim.layout_animation_uptodown;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mRecyclerView = findViewById(R.id.employeesList);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        mRecyclerView.setLayoutAnimation(animation);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

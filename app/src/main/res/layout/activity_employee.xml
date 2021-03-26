@@ -21,7 +21,8 @@
 <!--        android:textSize="30sp"/>-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/employeesList"
+        android:layoutAnimation="@anim/layout_animation_uptodown"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/employee_list"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="match_parent" />
 </LinearLayout>

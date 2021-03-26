@@ -1,10 +1,12 @@
 package com.example.hr_application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,10 +78,20 @@ public class ComposeFeed extends AppCompatActivity {
                 String date=day+"/"+month+"/"+year;
                 String content=txtContent.getText().toString();
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Feed feed=new Feed(name,date,content,developer,uid,purl,reference.getKey());
-                        reference.setValue(feed);
+                        if (!content.isEmpty()){
+                            Feed feed=new Feed(name,date,content,developer,uid,purl,reference.getKey());
+                            reference.setValue(feed);
+                            onBackPressed();
+                            finish();
+                        }
+                        else
+                        {
+                            txtContent.setError("Not Empty");
+                            Toast.makeText(ComposeFeed.this, "Content should not be empty", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -88,8 +100,6 @@ public class ComposeFeed extends AppCompatActivity {
                         Toast.makeText(ComposeFeed.this, ""+error.getDetails(), Toast.LENGTH_SHORT).show();
                     }
                 });
-                onBackPressed();
-                finish();
             }
         });
     }
