@@ -2,13 +2,13 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#fcfbee</color>
+    <color name="background">#fdfbee</color>
     <color name="DarkText">#535052</color>
-    <color name="DarkBackground">#ffbb5c</color>
+    <color name="DarkBackground">#d35a11</color>
     <color name="purple_700">#461c9a</color>
     <color name="neu">#555555</color>
     <color name="LightText">#BF604500</color>
-    <color name="darkBlue">#6800B3</color>
+    <color name="darkBlue">#0C388E</color>
     <color name="present">#00A115</color>
     <color name="absent">#BC0000</color>
     <color name="LightTxt">#BF453171</color>

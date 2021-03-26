@@ -36,7 +36,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="monospace"
                     android:text="FROM"
-                    android:textColor="@color/neu"
+                    android:textColor="@color/darkBlue"
                     android:textSize="20sp" />
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:layout_marginEnd="130dp"
                     android:fontFamily="monospace"
                     android:text="TO"
-                    android:textColor="@color/neu"
+                    android:textColor="@color/darkBlue"
                     android:textSize="20sp" />
 
                 <TextView
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/darkBlue"
                 android:text="REASON"
                 android:textSize="20dp"/>
             <EditText
@@ -118,6 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="APPLY"
+                android:textColor="@color/white"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"

@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:text="Change Meeting Link Here"
-        android:textColor="@color/black"
+        android:textColor="@color/darkBlue"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -34,8 +34,8 @@
             android:hint="Put here Your Link"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -57,7 +57,7 @@
         android:background="@color/DarkBackground"
         android:backgroundTint="@color/DarkBackground"
         android:text="Time"
-        android:textColor="@color/DarkText" />
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
             android:background="@color/DarkBackground"
             android:clickable="true"
             android:text="Update"
-            android:textColor="@color/DarkText"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <Button
@@ -84,7 +84,7 @@
             android:background="@color/DarkBackground"
             android:clickable="true"
             android:text="Cancel"
-            android:textColor="@color/DarkText"
+            android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>
 

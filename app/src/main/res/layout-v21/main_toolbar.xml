@@ -4,17 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar4"
-    style="?attr/actionBarSize"
+    android:theme="@style/ToolBarStyle"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:menu="@menu/menu"
-    android:background="@color/DarkBackground"
+    app:popupTheme="@style/ToolBarStyle"
+    android:background="@color/background"
     android:elevation="20dp">
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:scaleType="fitCenter"
+        android:layout_height="75dp"
         android:contentDescription="@string/crewlogo"
-        android:src="@drawable/ecvcrew_logo" />
+        android:src="@drawable/crew_bg_rev" />
 </androidx.appcompat.widget.Toolbar>
 

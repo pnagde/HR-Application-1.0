@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|center_vertical"
     android:elevation="10dp"
+    android:background="@color/white"
     android:textAlignment="center">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_marginTop="1dp"
         android:text="NOT CONNECTED TO NETWORK"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/darkBlue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +37,7 @@
     <Button
         android:layout_marginTop="10dp"
         android:id="@+id/retryBtn"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_background"

@@ -2,6 +2,7 @@ package com.example.hr_application;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,13 +35,14 @@ public class ComposeFeed extends AppCompatActivity {
     FloatingActionButton send;
     String uid,purl,name,developer,key;
     Intent intent;
-
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_feed);
         hooks();
+        supportTool();
 
         calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -81,8 +83,8 @@ public class ComposeFeed extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onCancelled(@NonNull DatabaseError error)
+                    {
                         Toast.makeText(ComposeFeed.this, ""+error.getDetails(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -90,6 +92,14 @@ public class ComposeFeed extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void supportTool()
+    {
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Compose News Feed");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -100,5 +110,6 @@ public class ComposeFeed extends AppCompatActivity {
     private void hooks() {
         txtContent=(EditText)findViewById(R.id.text_content);
         send=(FloatingActionButton)findViewById(R.id.post_btn);
+        toolbar=(Toolbar)findViewById(R.id.compose_id);
     }
 }
