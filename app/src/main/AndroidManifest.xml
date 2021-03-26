@@ -13,7 +13,6 @@
         <activity android:name=".ComposeFeed" />
         <activity android:name=".NewsFeed" />
         <activity android:name=".TeamDeskActivity" />
-
         <activity android:name=".AllLeaveRecordsActivity" />
         <activity android:name=".Splash">
             <intent-filter>
