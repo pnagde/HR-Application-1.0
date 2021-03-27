@@ -77,9 +77,11 @@ public class NewsFeed extends AppCompatActivity {
         intent.putExtra("uid",uid);
         startActivity(intent);
     }
+
     @Override
-    public boolean onNavigateUp() {
-        return super.onNavigateUp();
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     @Override
