@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "389688462929",
-    "project_id": "hr-app-7f42d",
-    "storage_bucket": "hr-app-7f42d.appspot.com"
+    "project_number": "47246988147",
+    "firebase_url": "https://hr-application-10b16-default-rtdb.firebaseio.com",
+    "project_id": "hr-application-10b16",
+    "storage_bucket": "hr-application-10b16.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:389688462929:android:ca3354eecdc507f0a1b270",
+        "mobilesdk_app_id": "1:47246988147:android:b2b61bf572824b4aaeab06",
         "android_client_info": {
-          "package_name": "com.example.hr_application"
+          "package_name": "com.ecv.EcvCrew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "389688462929-kr6g3gf696h3f8b6vd3lmrde1o80tcpj.apps.googleusercontent.com",
+          "client_id": "47246988147-6q2i90eo3svc9ibf64kl4f0lgihmm2ee.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD8C6pN5b1tlyQHnXryOVJOybBzR4-hWUQ"
+          "current_key": "AIzaSyDIM1VVLLWDSsfAu9OwUyihWY2Hfon1g6U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "389688462929-kr6g3gf696h3f8b6vd3lmrde1o80tcpj.apps.googleusercontent.com",
+              "client_id": "47246988147-6q2i90eo3svc9ibf64kl4f0lgihmm2ee.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

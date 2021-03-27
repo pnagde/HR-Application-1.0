@@ -190,11 +190,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         time.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String lin = snapshot.getValue().toString().trim();
-                if (lin != null) {
-                    meetview.setText(lin.replace("{", "").replace("}", "").replace("time", "")
-                            .replace("=", ""));
-                } else {
+                if(snapshot.exists()) {
+                    String lin = snapshot.getValue().toString().trim();
+                    if (lin != null) {
+                        meetview.setText(lin.replace("{", "").replace("}", "").replace("time", "")
+                                .replace("=", ""));
+                    }
+                }else {
                     meetview.setText(textMeetNo);
                 }
             }

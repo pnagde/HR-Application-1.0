@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.hr_application"
+        applicationId "com.ecv.EcvCrew"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
