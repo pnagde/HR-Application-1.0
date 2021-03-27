@@ -66,9 +66,11 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener, T
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String[] lin=snapshot.getValue().toString().split("=");
-                if (lin!=null){
-                    link.setText(lin[1].replace("}",""));
+                if(snapshot.exists()) {
+                    String[] lin = snapshot.getValue().toString().split("=");
+                    if (lin != null) {
+                        link.setText(lin[1].replace("}", ""));
+                    }
                 }
             }
 
