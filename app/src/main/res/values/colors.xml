@@ -12,4 +12,6 @@
     <color name="present">#00A115</color>
     <color name="absent">#BC0000</color>
     <color name="LightTxt">#BF453171</color>
+    <color name="textfieldcolor">#4E4848</color>
+    <color name="colorAssent">#FFFFFFFF</color>
 </resources>

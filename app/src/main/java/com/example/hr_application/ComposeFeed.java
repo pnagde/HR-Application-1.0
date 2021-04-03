@@ -122,4 +122,10 @@ public class ComposeFeed extends AppCompatActivity {
         send=(FloatingActionButton)findViewById(R.id.post_btn);
         toolbar=(Toolbar)findViewById(R.id.compose_id);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
 }

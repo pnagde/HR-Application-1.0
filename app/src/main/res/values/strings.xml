@@ -52,4 +52,5 @@
     <string name="attendance_sheet">Attendance</string>
     <string name="arrow_send">arrow_send</string>
     <string name="search_employees">Search employees</string>
+    <string name="forget_password">Forget Password?</string>
 </resources>

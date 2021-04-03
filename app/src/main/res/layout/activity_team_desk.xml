@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".TeamDeskActivity"
     android:orientation="vertical">
     <include layout="@layout/custom_toolbar"
@@ -26,88 +25,79 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/relativeLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
-
-        <ImageView
-            android:id="@+id/meetingLink"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="-18dp"
-            android:src="@drawable/logo_meet"
-            android:text="NO FOUND"
+        <TextView
+            android:id="@+id/leader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leader :"
             android:textColor="@color/darkBlue"
-            app:layout_constraintBottom_toBottomOf="@+id/meet"
-            app:layout_constraintStart_toEndOf="@id/meet"
-            app:layout_constraintTop_toTopOf="@+id/meet" />
+            android:textSize="27dp"
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/leaderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/leader"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/alegreya_sans_sc_medium"
             android:text="NO FOUND"
             android:textColor="@color/darkBlue"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/leader"
-            app:layout_constraintStart_toEndOf="@+id/leader"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/meet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@id/leader"
             android:text="Meeting Link :"
             android:textColor="@color/darkBlue"
-            android:textSize="27dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/leader" />
+            android:textSize="27dp" />
 
         <TextView
-            android:id="@+id/leader"
+            android:id="@+id/meetingLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Leader :"
-            android:textColor="@color/darkBlue"
-            android:textSize="27dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:layout_alignBottom="@+id/meet"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="7dp"
+            android:layout_toRightOf="@id/meet"
+            android:text="NO FOUND"
+            android:textColor="@color/darkBlue" />
         <TextView
             android:id="@+id/meet1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@id/meet"
             android:text="Meeting Time :"
             android:textColor="@color/darkBlue"
-            android:textSize="27dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/meet" />
+            android:textSize="27dp" />
 
         <TextView
             android:id="@+id/meetingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/meet1"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/meet1"
+            android:layout_below="@id/meetingLink"
             android:text="NO TIME"
-            android:textColor="@color/darkBlue"
             android:textSize="20dp"
-            android:paddingStart="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/meet1"
-            app:layout_constraintLeft_toRightOf="@id/meet1"
-            app:layout_constraintTop_toTopOf="@+id/meet1" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/darkBlue" />
+    </RelativeLayout>
     <TextView
         android:id="@+id/members"
         android:layout_width="wrap_content"

@@ -91,7 +91,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 mDate = calendar.get(Calendar.DATE);
                 mMonth = calendar.get(Calendar.MONTH);
                 mYear = calendar.get(Calendar.YEAR);
-                datePickerDialog = new DatePickerDialog(UserProfileActivity.this, android.R.style.Theme_DeviceDefault_Dialog, (view, year, month, dayOfMonth) -> dateOfBirth.setText(dayOfMonth + "-" + month + "-" + year), mYear, mMonth, mDate);
+                datePickerDialog = new DatePickerDialog(UserProfileActivity.this, android.R.style.Theme_DeviceDefault_Dialog, (view, year, month, dayOfMonth) -> dateOfBirth.setText(dayOfMonth + "-" + (month+1) + "-" + year), mYear, mMonth, mDate);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
