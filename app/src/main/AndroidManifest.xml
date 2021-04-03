@@ -13,6 +13,7 @@
         <activity android:name=".ComposeFeed" />
         <activity android:name=".NewsFeed" />
         <activity android:name=".TeamDeskActivity" />
+        <activity android:name=".TeamDeskListActivity" />
         <activity android:name=".AllLeaveRecordsActivity" />
         <activity android:name=".Splash">
             <intent-filter>
@@ -38,6 +39,5 @@
         <activity
             android:name=".loginActivity"
             android:theme="@style/Theme.HRApplication" />
-        <activity android:name=".TeamDeskListActivity"/>
     </application>
 </manifest>
