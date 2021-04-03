@@ -32,7 +32,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
     private String teamKey,linkML;
     private ArrayList<employeesModel> teamDeskEmployees;
     private TextView teamName,leaderName,meetingTime;
-    private ImageView meetingLink;
+    private TextView meetingLink;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     @Override
@@ -62,9 +62,13 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
         meetingLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(linkML);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try {
+                    Uri uri = Uri.parse(linkML);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }catch(Exception e){
+
+                }
             }
         });
     }
