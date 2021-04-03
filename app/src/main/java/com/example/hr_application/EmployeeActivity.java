@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.SearchView;
@@ -105,6 +106,9 @@ public class EmployeeActivity extends AppCompatActivity {
                 if (searchView.getQuery().length() != 0) {
                     searchEmployee(newText);
                 }
+                else{
+                    searchEmployee("");
+                }
                 return false;
             }
         });
@@ -112,34 +116,20 @@ public class EmployeeActivity extends AppCompatActivity {
     }
 
     private void searchEmployee(String query) {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        Query query1 = (reference.orderByChild("username").startAt(query).endAt(query+"\uf8ff"));
-//        Query query1  = (reference.orderByChild("username").startAt(query).equalTo(query).endAt(query+"\uf8ff"));
-        query1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                modelArrayList.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    final employeesModel user = dataSnapshot.getValue(employeesModel.class);
-                    if (i.getStringExtra("status").equals("Admin")) {
-                        modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
-                    }
-                    if(i.getStringExtra("status").equals("HR")){
-                        if(!(user.getDeveloper().equals("HR")||user.getDeveloper().equals("Admin"))){
-                            modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
-                        }
-                    }
-                }
+        ArrayList<employeesModel> searchList = new ArrayList<>();
+        for(int i = 0; i < modelArrayList.size(); i++) {
+            if(modelArrayList.get(i).getUsername().toLowerCase().startsWith(query.toLowerCase().trim())){
+                searchList.add(modelArrayList.get(i));
+            }
+            mAdapter = new employeesAdapter(EmployeeActivity.this, searchList);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+            if(query.equals("")){
                 mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        }
     }
 
     @Override
