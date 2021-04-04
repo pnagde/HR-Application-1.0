@@ -32,7 +32,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
     private String teamKey,linkML;
     private ArrayList<employeesModel> teamDeskEmployees;
     private TextView teamName,leaderName,meetingTime;
-    private ImageView meetingLink;
+    private TextView meetingLink;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     @Override
