@@ -62,9 +62,13 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
         meetingLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(linkML);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try {
+                    Uri uri = Uri.parse(linkML);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }catch(Exception e){
+
+                }
             }
         });
     }

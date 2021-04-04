@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,17 +85,18 @@ public class loginActivity extends AppCompatActivity {
     private void forgot_password(View v) {
 
         EditText resetmail = new EditText(v.getContext());
-        resetmail.setBackgroundColor(getResources().getColor(R.color.textfieldcolor));
+        resetmail.setBackgroundColor(getResources().getColor(R.color.DarkBackground));
         resetmail.setHint("Email");
-        resetmail.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        resetmail.setGravity(Gravity.CENTER);
+        resetmail.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         resetmail.setTextColor(getResources().getColor(R.color.colorAssent));
         resetmail.setHintTextColor(getResources().getColor(R.color.colorAssent));
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext(),R.style.MyDialogTheme);
-        alertDialog.setTitle(Html.fromHtml("<font color='#A8A8A8'>Reset Password?</font>"));
-        alertDialog.setMessage(Html.fromHtml("<font color='#A8A8A8'>Enter Your Email</font>"));
+        alertDialog.setTitle(Html.fromHtml("<font color='#d35a11'>Reset Password?</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#d35a11'>Enter Your Email</font>"));
         alertDialog.setView(resetmail);
 
-        alertDialog.setPositiveButton(Html.fromHtml("<font color='#A8A8A8'>YES</font>"), new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(Html.fromHtml("<font color='#d35a11'>YES</font>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Extract the email and sent reset link
@@ -116,7 +118,7 @@ public class loginActivity extends AppCompatActivity {
                 }
             }
         });
-        alertDialog.setNegativeButton(Html.fromHtml("<font color='#A8A8A8'>NO</font>"), new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(Html.fromHtml("<font color='#d35a11'>NO</font>"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Back to the login screen
