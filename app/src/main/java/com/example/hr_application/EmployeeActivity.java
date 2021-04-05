@@ -69,16 +69,23 @@ public class EmployeeActivity extends AppCompatActivity {
                 modelArrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     final employeesModel user = dataSnapshot.getValue(employeesModel.class);
-                    if (i.getStringExtra("status").equals("Admin")) {
+                    if (i.getStringExtra("status").toLowerCase().equals("super admin")) {
                         modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
                     }
-                    if(i.getStringExtra("status").equals("HR")){
-                        if(!(user.getDeveloper().equals("HR")||user.getDeveloper().equals("Admin"))){
+
+                    if (i.getStringExtra("status").toLowerCase().equals("admin")) {
+                        if(!(user.getDeveloper().toLowerCase().equals("admin")||user.getDeveloper().toLowerCase().equals("super admin"))){
+                            modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
+                        }
+                    }
+
+                    if(i.getStringExtra("status").toLowerCase().equals("hr")){
+                        if(!(user.getDeveloper().toLowerCase().equals("hr")||user.getDeveloper().toLowerCase().equals("admin")||user.getDeveloper().toLowerCase().equals("super admin"))){
                             modelArrayList.add(new employeesModel(user.getImageUrl(), user.getUsername(), user.getNumber(), user.getDeveloper(), user.getUserid()));
                         }
                     }
                 }
-                mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList);
+                mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList, i.getStringExtra("status"));
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -117,15 +124,15 @@ public class EmployeeActivity extends AppCompatActivity {
 
     private void searchEmployee(String query) {
         ArrayList<employeesModel> searchList = new ArrayList<>();
-        for(int i = 0; i < modelArrayList.size(); i++) {
-            if(modelArrayList.get(i).getUsername().toLowerCase().startsWith(query.toLowerCase().trim())){
-                searchList.add(modelArrayList.get(i));
+        for(int j = 0; j < modelArrayList.size(); j++) {
+            if(modelArrayList.get(j).getUsername().toLowerCase().startsWith(query.toLowerCase().trim())){
+                searchList.add(modelArrayList.get(j));
             }
-            mAdapter = new employeesAdapter(EmployeeActivity.this, searchList);
+            mAdapter = new employeesAdapter(EmployeeActivity.this, searchList, i.getStringExtra("status"));
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
             if(query.equals("")){
-                mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList);
+                mAdapter = new employeesAdapter(EmployeeActivity.this, modelArrayList, i.getStringExtra("status"));
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -153,5 +160,10 @@ public class EmployeeActivity extends AppCompatActivity {
     protected void onResume() {
         modelArrayList.clear();
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(EmployeeActivity.this,MainActivity.class));
     }
 }

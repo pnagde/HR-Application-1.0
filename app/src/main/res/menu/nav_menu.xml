@@ -55,6 +55,11 @@
         android:id="@+id/refer"
         android:title="Refer"
         android:icon="@drawable/ic_check_mark"/>
+    <item
+        android:id="@+id/add_user"
+        android:title="Add User"
+        android:icon="@drawable/ic_myaccount"/>
+
     <item android:id="@+id/logout"
         android:title="Logout"
         android:icon="@drawable/ic_logout"/>

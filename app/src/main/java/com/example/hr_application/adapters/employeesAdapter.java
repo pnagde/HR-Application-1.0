@@ -29,10 +29,12 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
 
     Context context;
     ArrayList<employeesModel> models;
+    String status;
 
-    public employeesAdapter(Context context, ArrayList<employeesModel> models) {
+    public employeesAdapter(Context context, ArrayList<employeesModel> models, String status) {
         this.context = context;
         this.models = models;
+        this.status=status;
     }
 
     @NonNull
@@ -58,6 +60,7 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
                 Intent i = new Intent(context, MyAccountActivity.class);
                 i.putExtra("uid", models.get(position).getUserid()+"");
                 i.putExtra("editable","yes");
+                i.putExtra("status", status);
                 context.startActivity(i);
             }
         });

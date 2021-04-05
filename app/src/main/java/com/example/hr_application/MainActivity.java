@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             hashMap.put("time", System.currentTimeMillis() + "");
             hashMap.put("date", currentDate + "/" + currentMonth + "/" + currentYear);
             reference.setValue(hashMap);
+            Toast.makeText(this, "Adios Amigo, see you soon", Toast.LENGTH_SHORT).show();
         });
         checkinbtn.setOnClickListener(v -> {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("attendance").push();
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             hashMap.put("time", System.currentTimeMillis() + "");
             hashMap.put("date", currentDate + "/" + currentMonth + "/" + currentYear);
             reference.setValue(hashMap);
+            Toast.makeText(this, "Welcome Amigo, good to have you", Toast.LENGTH_SHORT).show();
         });
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("attendance");
         Query query = (reference.orderByChild("time"));
@@ -369,16 +371,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem CreateTeam = myMenu.findItem(R.id.createTeam);
         MenuItem UpdateMeet = myMenu.findItem(R.id.meet_update);
         MenuItem UploadTask = myMenu.findItem(R.id.uploadTask);
+        MenuItem AddUser = myMenu.findItem(R.id.add_user);
         LeaveApplication.setVisible(false);
         Employees.setVisible(false);
         CreateTeam.setVisible(false);
         UpdateMeet.setVisible(false);
         UploadTask.setVisible(false);
+        AddUser.setVisible(false);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("Developer").getValue().equals("HR")) {
+                if (snapshot.child("Developer").getValue().toString().toUpperCase().equals("HR")) {
                     LeaveApplication.setVisible(true);
                     Employees.setVisible(true);
                     CreateTeam.setVisible(true);
@@ -386,13 +390,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     UploadTask.setVisible(true);
                     status = "HR";
                 }
-                if ((snapshot.child("Developer").getValue().equals("Admin"))) {
+                if ((snapshot.child("Developer").getValue().toString().toLowerCase().equals("admin"))) {
                     LeaveApplication.setVisible(true);
                     Employees.setVisible(true);
                     CreateTeam.setVisible(true);
                     UpdateMeet.setVisible(true);
                     UploadTask.setVisible(true);
                     status = "Admin";
+                }
+                if(((snapshot.child("Developer").getValue().toString().toLowerCase().equals("super admin")))){
+                    LeaveApplication.setVisible(true);
+                    Employees.setVisible(true);
+                    CreateTeam.setVisible(true);
+                    UpdateMeet.setVisible(true);
+                    UploadTask.setVisible(true);
+                    AddUser.setVisible(true);
+                    status = "Super Admin";
                 }
             }
 
@@ -412,22 +425,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 i.putExtra("editable", "no");
                 startActivity(i);
-//                Toast.makeText(this, "My Account is Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.dashboard:
                 if (mDrawer.isDrawerOpen(GravityCompat.START))
                     mDrawer.closeDrawers();
-//                Toast.makeText(this, "Dashboard is Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.attendance:
                 startActivity(new Intent(this, AttendanceActivity.class));
-//                Toast.makeText(this, "Attendance is Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.employees:
                 Intent intent1 = new Intent(this, EmployeeActivity.class);
                 intent1.putExtra("status", status);
                 startActivity(intent1);
-//                Toast.makeText(this, "Employees is Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.uploadTask:
                 startActivity(new Intent(this, TaskUploadActivity.class));

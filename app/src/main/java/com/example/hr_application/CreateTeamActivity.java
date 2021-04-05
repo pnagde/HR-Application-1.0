@@ -115,7 +115,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                     final employeesModel user = dataSnapshot.getValue(employeesModel.class);
                     acceptedEmployeeModel.add(new employeesModel(user.getImageUrl(),user.getUsername(),user.getNumber(),user.getDeveloper(),user.getUserid()));
                 }
-                employeesAdapter = new employeesAdapter(CreateTeamActivity.this, acceptedEmployeeModel);
+                employeesAdapter = new employeesAdapter(CreateTeamActivity.this, acceptedEmployeeModel,"");
                 recyclerView.setLayoutManager(new LinearLayoutManager(CreateTeamActivity.this));
                 recyclerView.setAdapter(employeesAdapter);
             }

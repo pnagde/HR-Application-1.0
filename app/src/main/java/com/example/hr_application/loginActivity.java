@@ -27,7 +27,7 @@ public class loginActivity extends AppCompatActivity {
     private TextView username,forgetPassword;
     private TextView password;
     private FirebaseAuth auth;
-    Button signup,login;
+    Button login;
 
 
     @Override
@@ -39,15 +39,7 @@ public class loginActivity extends AppCompatActivity {
         forgetPassword=findViewById(R.id.forgetPassword);
 
         login = (Button) findViewById(R.id.login);
-        signup= (Button)findViewById(R.id.signupcheck);
         auth = FirebaseAuth.getInstance();
-        signup.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(loginActivity.this,signupActivity.class));
-           }
-
-        });
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
