@@ -7,6 +7,9 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -107,8 +111,35 @@ public class UserProfileActivity extends AppCompatActivity {
     private void check() {
         if (!phoneNumber.getText().toString().isEmpty())
             phoneNumber.setFocusable(false);
-        else
+        else{
             phoneNumber.setFocusableInTouchMode(true);
+            phoneNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                   try {
+                       String length = (phoneNumber.getText().toString().trim());
+                       if (length.length()==10){
+                           btnSetup.setEnabled(true);
+                       } else {
+                           phoneNumber.setError("Number should be 10");
+                           btnSetup.setEnabled(false);
+                       }
+                   }catch (Exception e){
+                       Log.d("Vinay", "onTextChanged: "+e);
+                   }
+                    
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
         if (!homeAddress.getText().toString().trim().isEmpty()) {
             homeAddress.setFocusable(false);
         }

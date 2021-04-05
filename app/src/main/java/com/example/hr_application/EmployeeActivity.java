@@ -143,15 +143,27 @@ public class EmployeeActivity extends AppCompatActivity {
 //        startActivity(new Intent(EmployeeActivity.this,MainActivity.class));
 //    }
 
+//    @Override
+//    protected void onStart() {
+//        modelArrayList.clear();
+//        super.onStart();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        modelArrayList.clear();
+//        super.onResume();
+//    }
+
     @Override
-    protected void onStart() {
-        modelArrayList.clear();
-        super.onStart();
+    protected void onPause() {
+        super.onPause();
+        onStart();
     }
 
     @Override
-    protected void onResume() {
-        modelArrayList.clear();
-        super.onResume();
+    protected void onStop() {
+        super.onStop();
+        onStart();
     }
 }

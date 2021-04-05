@@ -1,21 +1,28 @@
 package com.example.hr_application.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hr_application.MyAccountActivity;
 import com.example.hr_application.R;
+import com.example.hr_application.loginActivity;
 import com.example.hr_application.models.employeesModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +36,7 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
 
     Context context;
     ArrayList<employeesModel> models;
-
+    FirebaseUser user;
     public employeesAdapter(Context context, ArrayList<employeesModel> models) {
         this.context = context;
         this.models = models;
@@ -59,6 +66,47 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
                 i.putExtra("uid", models.get(position).getUserid()+"");
                 i.putExtra("editable","yes");
                 context.startActivity(i);
+            }
+        });
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                Toast.makeText(context, "Clicked "+position, Toast.LENGTH_SHORT).show();
+                if (model1.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                {
+                    Toast.makeText(context, "Cannot delete your own account ", Toast.LENGTH_SHORT).show();
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Delete");
+                    builder.setMessage("Do you want to delete this employee ?");
+                    builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseDatabase.getInstance().getReference().child("users").child(model1.getUserid()).setValue(null)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            if (FirebaseAuth.getInstance().getCurrentUser().getUid() == model1.getUserid()){
+                                                Intent i = new Intent(context, loginActivity.class);
+                                                context.startActivity(i);
+                                            }
+//                                            FirebaseAuth.getInstance().getCurrentUser.delete()
+//                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                        @Override
+//                                                        public void onComplete(@NonNull Task<Void> task) {
+//                                                            if (task.isSuccessful()) {
+//                                                                Toast.makeText(context, "Employee deleted successfully ", Toast.LENGTH_SHORT).show();
+//                                                            }
+//                                                        }
+//                                                    });
+                                        }
+                                    });
+                        }
+                    }).setNegativeButton("CANCEL", null);
+                    AlertDialog dialog = builder
+                            .show();
+                }
+                return true;
             }
         });
 
