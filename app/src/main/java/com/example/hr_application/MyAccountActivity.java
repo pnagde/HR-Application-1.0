@@ -49,6 +49,7 @@ public class MyAccountActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private SharedPreferences preferences;
     private double count1=0,total=0;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class MyAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_account);
         toolbar=findViewById(R.id.account_tool);
         setSupportActionBar(toolbar);
+        intent=getIntent();
         getSupportActionBar().setTitle("My Account");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userid=getIntent().getStringExtra("uid");
@@ -357,7 +359,9 @@ public class MyAccountActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (editable.equals("yes")){
-            startActivity(new Intent(this,EmployeeActivity.class));
+            Intent i =new Intent(this,EmployeeActivity.class);
+            i.putExtra("status", intent.getStringExtra("status"));
+            startActivity(i);
             finish();
         }
         else {
