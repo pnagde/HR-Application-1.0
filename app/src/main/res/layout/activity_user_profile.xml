@@ -95,6 +95,8 @@
         android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="@string/enter_phone_number"
+        android:maxLength="10"
+        android:digits="0123456789"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:inputType="phone"
