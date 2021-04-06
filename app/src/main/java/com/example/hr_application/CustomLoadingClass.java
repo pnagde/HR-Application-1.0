@@ -47,4 +47,9 @@ public class CustomLoadingClass extends Dialog {
         lottieAnimationView.setSpeed(1);
         lottieAnimationView.playAnimation();
     }
+
+    @Override
+    public void onBackPressed() {
+        c.finishAffinity();
+    }
 }
