@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadingC = (LottieAnimationView) findViewById(R.id.loadingAnimationC);
         empty = (LottieAnimationView) findViewById(R.id.empty);
         cl=new CustomLoadingClass(MainActivity.this);
+        cl.setCanceledOnTouchOutside(false);
         cl.show();
         if (!isOnline()) {
             Toast.makeText(this, "Not Connection to Network", Toast.LENGTH_SHORT).show();
@@ -382,30 +383,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("Developer").getValue().toString().toUpperCase().equals("HR")) {
-                    LeaveApplication.setVisible(true);
-                    Employees.setVisible(true);
-                    CreateTeam.setVisible(true);
-                    UpdateMeet.setVisible(true);
-                    UploadTask.setVisible(true);
-                    status = "HR";
-                }
-                if ((snapshot.child("Developer").getValue().toString().toLowerCase().equals("admin"))) {
-                    LeaveApplication.setVisible(true);
-                    Employees.setVisible(true);
-                    CreateTeam.setVisible(true);
-                    UpdateMeet.setVisible(true);
-                    UploadTask.setVisible(true);
-                    status = "Admin";
-                }
-                if(((snapshot.child("Developer").getValue().toString().toLowerCase().equals("super admin")))){
-                    LeaveApplication.setVisible(true);
-                    Employees.setVisible(true);
-                    CreateTeam.setVisible(true);
-                    UpdateMeet.setVisible(true);
-                    UploadTask.setVisible(true);
-                    AddUser.setVisible(true);
-                    status = "Super Admin";
+                if(snapshot.exists()) {
+                    if (snapshot.child("Developer").getValue().toString().toUpperCase().equals("HR")) {
+                        LeaveApplication.setVisible(true);
+                        Employees.setVisible(true);
+                        CreateTeam.setVisible(true);
+                        UpdateMeet.setVisible(true);
+                        UploadTask.setVisible(true);
+                        status = "HR";
+                    }
+                    if ((snapshot.child("Developer").getValue().toString().toLowerCase().equals("admin"))) {
+                        LeaveApplication.setVisible(true);
+                        Employees.setVisible(true);
+                        CreateTeam.setVisible(true);
+                        UpdateMeet.setVisible(true);
+                        UploadTask.setVisible(true);
+                        status = "Admin";
+                    }
+                    if (((snapshot.child("Developer").getValue().toString().toLowerCase().equals("super admin")))) {
+                        LeaveApplication.setVisible(true);
+                        Employees.setVisible(true);
+                        CreateTeam.setVisible(true);
+                        UpdateMeet.setVisible(true);
+                        UploadTask.setVisible(true);
+                        AddUser.setVisible(true);
+                        status = "Super Admin";
+                    }
+                }else{
+                    startActivity(new Intent(MainActivity.this, no_data.class));
+                    Toast.makeText(MainActivity.this, "Contact Admin", Toast.LENGTH_SHORT).show();
                 }
             }
 
