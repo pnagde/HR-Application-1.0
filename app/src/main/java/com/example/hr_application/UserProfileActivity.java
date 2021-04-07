@@ -35,7 +35,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button btnSetup;
     private DatePickerDialog datePickerDialog;
     private int mDate, mMonth, mYear;
-
+    String img;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class UserProfileActivity extends AppCompatActivity {
         btnSetup = findViewById(R.id.setupProfile);
         emailId = getIntent().getStringExtra("emailId");
         email.setText(emailId);
+
         dateOfBirth.setClickable(false);
         dateOfBirth.setFocusableInTouchMode(false);
         dateOfBirth.setFocusable(false);
@@ -74,6 +75,11 @@ public class UserProfileActivity extends AppCompatActivity {
                     String name = snapshot.child("username").getValue().toString();
                     username.setText(name);
 
+                    if (snapshot.child("ImageUrl").exists()){
+                        img = snapshot.child("ImageUrl").getValue().toString();
+                    }else{
+                        img="null";
+                    }
                     check();
                 }
             }
@@ -143,6 +149,19 @@ public class UserProfileActivity extends AppCompatActivity {
         usermap.put("PhoneNumber", phoneNumber.getText().toString().trim());
         usermap.put("HomeAddress", homeAddress.getText().toString().trim());
         usermap.put("Developer", developer.getText().toString().trim());
+        usermap.put("username", username.getText().toString().trim());
+        usermap.put("email", email.getText().toString().trim());
+        usermap.put("userid",user.getUid());
+        usermap.put("status","");
+        usermap.put("post","Not Mentioned");
+        usermap.put("gender","Not Mentioned");
+        usermap.put("language","Not Mentioned");
+        usermap.put("country","Not Mentioned");
+        usermap.put("points","100");
+        usermap.put("Badges","0");
+        if(img.equals("null")){
+            usermap.put("ImageUrl", "No Profile Image");
+        }
         userData.updateChildren(usermap).addOnSuccessListener(aVoid -> {
             startActivity(new Intent(UserProfileActivity.this, MainActivity.class));
             finish();

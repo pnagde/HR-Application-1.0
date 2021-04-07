@@ -195,9 +195,10 @@ public class MyAccountActivity extends AppCompatActivity {
                                 userName = snapshot.child("username").getValue().toString();
                                 name.setText(userName);
                                 name1.setText(userName);
-
-                                userPic = snapshot.child("ImageUrl").getValue().toString();
-                                loadImage();
+                                if(snapshot.child("ImageUrl").exists()) {
+                                    userPic = snapshot.child("ImageUrl").getValue().toString();
+                                    loadImage();
+                                }
 
                                 userEmail = snapshot.child("email").getValue().toString();
                                 emailId.setText(userEmail);

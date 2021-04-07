@@ -254,8 +254,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             } else navHeaderName.setText(name[0] + "");
                             String email = (snapshot.child("email").getValue()).toString().trim();
                             navHeaderEmail.setText(email);
-                            String url = snapshot.child("ImageUrl").getValue().toString();
-                            loadImage(url);
+                            if(snapshot.child("ImageUrl").exists()) {
+                                String url = snapshot.child("ImageUrl").getValue().toString();
+                                loadImage(url);
+                            }else{
+                                loadImage("https://firebasestorage.googleapis.com/v0/b/hr-application-10b16.appspot.com/o/logo_e_city.jpg?alt=media&token=f1f952a8-cd67-4346-935b-ef754ae57928");
+                            }
                         }
                     }
 
