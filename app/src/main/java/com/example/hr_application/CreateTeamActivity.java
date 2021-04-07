@@ -142,11 +142,8 @@ public class CreateTeamActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         final Intent i= getIntent();
-// <<<<<<< VinayLeaveApplication
-//         if(i.getStringExtra("key")!=null&&bool) {
-// =======
         if(i.getStringExtra("key")!=null && bool) {
-// >>>>>>> master
+
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("teams").child(i.getStringExtra("key"));
             reference.setValue(null);
             Log.d("ojasinside","dist");
@@ -159,11 +156,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         final Intent i= getIntent();
-// <<<<<<< VinayLeaveApplication
-//         if(i.getStringExtra("key")!=null&&bool) {
-// =======
         if(i.getStringExtra("key")!=null&& bool) {
-// >>>>>>> master
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("teams").child(i.getStringExtra("key"));
             reference.setValue(null);
             Log.d("ojasinside","rest");

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_crew_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HRApplication">
-        <activity android:name=".no_data"></activity>
+        <activity android:name=".no_data" />
         <activity android:name=".ComposeFeed" />
         <activity android:name=".NewsFeed" />
         <activity android:name=".TeamDeskActivity" />
