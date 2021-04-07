@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.hr_application.R;
 import com.example.hr_application.models.employeesModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -38,15 +43,28 @@ public class teamDeskAdapter extends RecyclerView.Adapter<teamDeskAdapter.teamVi
     @Override
     public void onBindViewHolder(@NonNull teamViewHolder holder, int position) {
         employeesModel model = teamDeskModel.get(position);
-        holder.name.setText(model.getUsername());
-        holder.developer.setText(model.getDeveloper());
-        try{
-            Glide.with(context).load(model.getImageUrl())
-                    .placeholder(R.drawable.logo_circle)
-                    .into(holder.circleImageView);
-        }catch (Exception  e){
-            Log.d("userFound", "onDataChange: "+e);
-        }
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(model.getUserid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final employeesModel user = snapshot.getValue(employeesModel.class);
+                holder.name.setText(user.getUsername());
+                holder.developer.setText(user.getDeveloper());
+                try{
+                    Glide.with(context).load(user.getImageUrl())
+                            .placeholder(R.drawable.logo_circle)
+                            .into(holder.circleImageView);
+                }catch (Exception  e){
+                    Log.d("userFound", "onDataChange: "+e);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override

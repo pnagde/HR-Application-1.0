@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        Log.d("ojasss","in");
         logo=(ImageView) findViewById(R.id.logo_ecv);
         if (logo!=null){
             TranslateAnimation animate = new TranslateAnimation(0,0, -700, 0);
@@ -34,10 +36,7 @@ public class Splash extends AppCompatActivity {
                         sleep(3 * 1000);
                         // After 5 seconds redirect to another intent
                         if (user != null) {
-                            if (auth.getCurrentUser().isEmailVerified()) {
                                 startActivity(new Intent(Splash.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                            }
-
                         } else {
                             startActivity(new Intent(Splash.this, loginActivity.class));
                         }
