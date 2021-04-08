@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.hr_application.adapters.TeamDeskListAdapter;
 import com.example.hr_application.models.TeamDeskListModel;
@@ -30,6 +29,7 @@ public class TeamDeskListActivity extends AppCompatActivity implements TeamDeskL
     private RecyclerView.Adapter mAdapter;
     private DatabaseReference databaseReference;
     private ArrayList<TeamDeskListModel> deskListModels;
+    private String status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,7 @@ public class TeamDeskListActivity extends AppCompatActivity implements TeamDeskL
         getSupportActionBar().setTitle("Team List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        status = getIntent().getStringExtra("status");
         fetchKeys();
     }
     private void fetchKeys() {
@@ -61,7 +62,7 @@ public class TeamDeskListActivity extends AppCompatActivity implements TeamDeskL
                         }
                     }
                 }
-                mAdapter = new TeamDeskListAdapter(TeamDeskListActivity.this, TeamDeskListActivity.this, deskListModels);
+                mAdapter = new TeamDeskListAdapter(TeamDeskListActivity.this, TeamDeskListActivity.this, deskListModels,status);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -72,36 +73,6 @@ public class TeamDeskListActivity extends AppCompatActivity implements TeamDeskL
         });
 
     }
-
-//    private void showKeys(String path) {
-////        for (int i=0;i<keys.size();i++){
-////            Log.d("userFound", "onDataChange: "+ keys);
-////            String path=keys.get(i);
-//        //        }
-//            databaseReference.child(path).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                    Log.d("userFound", "onDataChange: data entry");
-//                    if (snapshot.exists()){
-//                        TeamDeskListModel model = snapshot.getValue(TeamDeskListModel.class);
-////                        String teamName,teamKey;
-////                        teamName = snapshot.child("teamName").getValue(String.class);
-////                        teamKey = snapshot.child("key").getValue(String.class);
-////                        Log.d("userFound", "onDataChange: name "+teamName);
-////                        Log.d("userFound", "onDataChange: key "+teamKey);
-////                        TeamDeskListModel model = new TeamDeskListModel(teamName, teamKey);
-//                        deskListModels.add(model);
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Log.d("userFound", "onDataChange: "+error);
-//                }
-//            });
-//    }
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -111,8 +82,9 @@ public class TeamDeskListActivity extends AppCompatActivity implements TeamDeskL
     @Override
     public void onItemClicked(TeamDeskListModel model) {
         Log.d("key", "onItemClicked: "+model.getKey());
-        Intent i = new Intent(this, TeamDeskActivity.class);
-        i.putExtra("teamKey", model.getKey());
-        startActivity(i);
+        Intent intent = new Intent(this, TeamDeskActivity.class);
+        intent.putExtra("teamKey", model.getKey());
+        intent.putExtra("status", status);
+        startActivity(intent);
     }
 }

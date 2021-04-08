@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hr_application.adapters.teamDeskAdapter;
 import com.example.hr_application.models.employeesModel;
@@ -29,12 +30,13 @@ import java.util.HashMap;
 public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCustomDialog.DialogListener{
     private Toolbar toolbar;
     private DatabaseReference databaseReference;
-    private String teamKey,linkML;
+    private String teamKey,linkML,status;
     private ArrayList<employeesModel> teamDeskEmployees;
     private TextView teamName,leaderName,meetingTime;
     private TextView meetingLink;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
         meetingTime = findViewById(R.id.meetingTime);
 
         teamKey = getIntent().getStringExtra("teamKey");
-
+        status = getIntent().getStringExtra("status");
         mRecyclerView = findViewById(R.id.teamDeskRV);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -77,6 +79,7 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                teamDeskEmployees.clear();
                 if (snapshot.exists()){
                     String tN,lN,mL,mT;
                     tN = snapshot.child("teamName").getValue(String.class);
@@ -86,12 +89,14 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
                     teamName.setText(tN);
                     leaderName.setText(lN);
                     linkML=mL;
+//                    Toast.makeText(TeamDeskActivity.this, "-><> "+mL, Toast.LENGTH_SHORT).show();
+                    meetingLink.setText(linkML);
                     meetingTime.setText(mT);
                     for (DataSnapshot snapshot1:snapshot.child("members").getChildren()){
                         employeesModel model = snapshot1.getValue(employeesModel.class);
                         teamDeskEmployees.add(model);
                     }
-                    mAdapter = new teamDeskAdapter(TeamDeskActivity.this, teamDeskEmployees);
+                    mAdapter = new teamDeskAdapter(TeamDeskActivity.this, teamDeskEmployees,status,teamKey);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -130,6 +135,8 @@ public class TeamDeskActivity extends AppCompatActivity implements TeamDeskCusto
     @Override
     public void addDetails(String link, String time) {
         linkML=link;
+//        Toast.makeText(this, "->"+link, Toast.LENGTH_SHORT).show();
+        meetingLink.setText(link);
         meetingTime.setText(time);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("teams").child(teamKey);
         HashMap<String , Object> obj = new HashMap<>();

@@ -452,7 +452,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, TaskUploadActivity.class));
                 break;
             case R.id.teamDesk:
-                startActivity(new Intent(this, TeamDeskListActivity.class));
+                Intent intent2 = new Intent(this, TeamDeskListActivity.class);
+                intent2.putExtra("status", status);
+                startActivity(intent2);
                 break;
             case R.id.applyForLeave:
                 startActivity(new Intent(this, ApplyLeaveActivity.class));

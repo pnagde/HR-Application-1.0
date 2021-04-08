@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -23,14 +24,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class loginActivity extends AppCompatActivity {
     private TextView username,forgetPassword;
     private TextView password;
     private FirebaseAuth auth;
     Button login;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,7 @@ public class loginActivity extends AppCompatActivity {
         username=findViewById(R.id.emailInput);
         password=findViewById(R.id.passwordInput);
         forgetPassword=findViewById(R.id.forgetPassword);
-Log.d("ojasla","in");
+        Log.d("ojasla","in");
         login = (Button) findViewById(R.id.login);
         auth = FirebaseAuth.getInstance();
         forgetPassword.setOnClickListener(new View.OnClickListener() {

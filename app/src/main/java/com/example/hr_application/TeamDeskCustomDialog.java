@@ -70,8 +70,6 @@ public class TeamDeskCustomDialog extends AppCompatDialogFragment {
                 calendar.set(Calendar.MINUTE,minute);
                 String t=hourOfDay+":"+minute;
                 TeamDeskCustomDialog.this.updateTime.setText(t);
-//                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-//                TeamDeskCustomDialog.this.updateTime.setText(simpleDateFormat.format(calendar));
             }
         };
         new TimePickerDialog(getActivity(),timeSetListener,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE), android.text.format.DateFormat.is24HourFormat(getActivity())).show();
