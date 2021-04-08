@@ -2,27 +2,20 @@ package com.example.hr_application;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.PropertyName;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -50,7 +43,7 @@ public class UserProfileActivity extends AppCompatActivity {
         btnSetup = findViewById(R.id.setupProfile);
         emailId = getIntent().getStringExtra("emailId");
         email.setText(emailId);
-
+        img="null";
         dateOfBirth.setClickable(false);
         dateOfBirth.setFocusableInTouchMode(false);
         dateOfBirth.setFocusable(false);
@@ -77,8 +70,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
                     if (snapshot.child("ImageUrl").exists()){
                         img = snapshot.child("ImageUrl").getValue().toString();
-                    }else{
-                        img="null";
                     }
                     check();
                 }
@@ -157,15 +148,16 @@ public class UserProfileActivity extends AppCompatActivity {
         usermap.put("gender","Not Mentioned");
         usermap.put("language","Not Mentioned");
         usermap.put("country","Not Mentioned");
-        usermap.put("points","100");
+        usermap.put("points","0");
         usermap.put("Badges","0");
         if(img.equals("null")){
             usermap.put("ImageUrl", "No Profile Image");
+        }else{
+            usermap.put("ImageUrl",img);
         }
-        userData.updateChildren(usermap).addOnSuccessListener(aVoid -> {
+        userData.setValue(usermap).addOnSuccessListener(aVoid -> {
             startActivity(new Intent(UserProfileActivity.this, MainActivity.class));
             finish();
         });
-
     }
 }
