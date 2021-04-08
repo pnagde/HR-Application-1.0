@@ -1,12 +1,15 @@
 package com.example.hr_application.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -15,8 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.hr_application.MyAccountActivity;
 import com.example.hr_application.R;
+import com.example.hr_application.loginActivity;
 import com.example.hr_application.models.employeesModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -62,6 +68,48 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
                 i.putExtra("editable","yes");
                 i.putExtra("status", status);
                 context.startActivity(i);
+            }
+        });
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (status.equalsIgnoreCase("Super Admin")|| status.equalsIgnoreCase("Admin")){
+                    if (model1.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                    {
+                        Toast.makeText(context, "Cannot delete your own account ", Toast.LENGTH_SHORT).show();
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Delete");
+                        builder.setMessage("Do you want to delete this employee ?");
+                        builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseDatabase.getInstance().getReference().child("users").child(model1.getUserid()).setValue(null)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(model1.getUserid())){
+                                                    Intent i = new Intent(context, loginActivity.class);
+                                                    context.startActivity(i);
+                                                }
+                                                try {
+
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                            }
+                        }).setNegativeButton("CANCEL", null);
+                        AlertDialog dialog = builder
+                                .show();
+                    }
+                    return true;
+                }else {
+                    Toast.makeText(context, "Only admin can remove", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
             }
         });
 

@@ -145,25 +145,21 @@ public class EmployeeActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        startActivity(new Intent(EmployeeActivity.this,MainActivity.class));
-//    }
-
-    @Override
-    protected void onStart() {
-        modelArrayList.clear();
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        modelArrayList.clear();
-        super.onResume();
-    }
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(EmployeeActivity.this,MainActivity.class));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        onStart();
     }
 }

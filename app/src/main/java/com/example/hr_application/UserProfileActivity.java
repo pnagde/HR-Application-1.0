@@ -18,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -100,12 +103,49 @@ public class UserProfileActivity extends AppCompatActivity {
 
         btnSetup.setOnClickListener(v -> setupProfile());
     }
-
+    private boolean Validate_phone(String number) {
+        Pattern p = Pattern.compile("[6-9][0-9]{9}");
+        Matcher m =p.matcher(number);
+        return (m.find()&&m.group().equals(number));
+    }
     private void check() {
         if (!phoneNumber.getText().toString().isEmpty())
             phoneNumber.setFocusable(false);
-        else
+        else{
             phoneNumber.setFocusableInTouchMode(true);
+            phoneNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                   try {
+                       String length = (phoneNumber.getText().toString().trim());
+                       if (length.length()==10){
+                           if (Validate_phone(length)){
+                               btnSetup.setEnabled(true);
+                           }else {
+                               phoneNumber.setError("Invalid Number");
+                               btnSetup.setEnabled(false);
+                           }
+
+                       } else {
+                           phoneNumber.setError("Number should be 10");
+                           btnSetup.setEnabled(false);
+                       }
+                   }catch (Exception e){
+                       Log.d("Vinay", "onTextChanged: "+e);
+                   }
+                    
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
         if (!homeAddress.getText().toString().trim().isEmpty()) {
             homeAddress.setFocusable(false);
         }
