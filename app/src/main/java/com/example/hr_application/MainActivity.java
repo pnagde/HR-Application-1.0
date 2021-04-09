@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int month, year;
     CustomLoadingClass cl;
     private String status;
+    private String stats;
     LottieAnimationView done;
     private LottieAnimationView loading, loadingC, empty;
     private ArrayList<String> date = new ArrayList<>();
@@ -363,6 +364,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Intent intent = new Intent(this, NewsFeed.class);
             intent.putExtra("uid", uid);
+            intent.putExtra("status",status);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -388,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
+                    stats=snapshot.child("Developer").getValue().toString();
                     if (snapshot.child("Developer").getValue().toString().toUpperCase().equals("HR")) {
                         LeaveApplication.setVisible(true);
                         Employees.setVisible(true);
@@ -485,6 +488,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, loginActivity.class));
                 finish();
+                break;
+            case R.id.add_user:
+                startActivity(new Intent(this,DashboardActivity.class));
                 break;
         }
         mDrawer.closeDrawer(GravityCompat.START);

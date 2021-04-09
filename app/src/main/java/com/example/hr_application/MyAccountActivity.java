@@ -12,13 +12,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.hr_application.adapters.spinnerAdapater;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,17 +36,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyAccountActivity extends AppCompatActivity {
+public class MyAccountActivity extends AppCompatActivity{
 
     private String userName,  userPic, userEmail, userNumber, userDob, userDeveloper;
-    private Button logout, editProfile, attendanceSheet ;
-    private EditText editName, editEmailId, editPhoneNumber, editDob, editDeveloper;
+    private Button logout, editProfile, attendanceSheet;
+    private EditText editName, editEmailId, editPhoneNumber, editDob;
+    private Spinner editDeveloper;
     private TextView emailId, name, name1, userPhoneNumber, accountDob, developer,attendanceRecord,taskPercentage;
-    private ImageView profileImage, save ;
+    private ImageView profileImage, save;
     private FirebaseStorage storage;
     private Toolbar toolbar;
+    ArrayList<String> role;
     private String userid,editable;
     private ProgressDialog dialog;
     private StorageReference reference;
@@ -68,6 +75,7 @@ public class MyAccountActivity extends AppCompatActivity {
         name1 = findViewById(R.id.name1);
         name = findViewById(R.id.accountName);
         emailId = findViewById(R.id.emailId);
+        logout = findViewById(R.id.logout);
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
         accountDob = findViewById(R.id.accountDob);
         developer = findViewById(R.id.developer);
@@ -88,11 +96,14 @@ public class MyAccountActivity extends AppCompatActivity {
         editProfile = findViewById(R.id.editProfile);
         if(editable.equals("yes")){
             editProfile.setVisibility(View.VISIBLE);
+            logout.setVisibility(View.GONE);
         }else{
             editProfile.setVisibility(View.GONE);
+            logout.setVisibility(View.VISIBLE);
         }
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editDob = findViewById(R.id.editDob);
+        //
         editDeveloper = findViewById(R.id.editDeveloper);
 
         profileImage = findViewById(R.id.profileImage);
@@ -101,8 +112,6 @@ public class MyAccountActivity extends AppCompatActivity {
         reference = FirebaseStorage.getInstance().getReference();
 
         databaseReference =  FirebaseDatabase.getInstance().getReference().child("users").child(userid);
-
-        logout = findViewById(R.id.logout);
         save = findViewById(R.id.saveProfile);
         save.setVisibility(View.INVISIBLE);
         fetchData();
@@ -131,7 +140,6 @@ public class MyAccountActivity extends AppCompatActivity {
                 finishAffinity();
             }
         });
-
     }
 
     @Override
@@ -244,8 +252,38 @@ public class MyAccountActivity extends AppCompatActivity {
 
         developer.setVisibility(View.INVISIBLE);
         editDeveloper.setVisibility(View.VISIBLE);
-        editDeveloper.setText(userDeveloper);
+        role=new ArrayList<>();
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Role");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                role.clear();
+                for (DataSnapshot areaSnapshot: snapshot.getChildren()) {
+                     role.add(areaSnapshot.getValue(String.class));
+                }
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(MyAccountActivity.this, android.R.layout.simple_spinner_item, role);
+                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                editDeveloper.setAdapter(areasAdapter);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        editDeveloper.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(role.size()!=0){
+                    userDeveloper=role.get(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         save.setVisibility(View.VISIBLE);
         profileImage.setEnabled(true);
         save.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +295,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 String userEmail1 = editEmailId.getText().toString().trim();
                 String userNumber1 = editPhoneNumber.getText().toString().trim();
                 String userDob1 = editDob.getText().toString().trim();
-                String userDeveloper1 = editDeveloper.getText().toString().trim();
+                String userDeveloper1 = userDeveloper;
 
                 editor.putString("username", userName1);
                 editor.putString("email", userEmail1);

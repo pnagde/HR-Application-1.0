@@ -28,13 +28,13 @@ import java.util.regex.Pattern;
 public class UserProfileActivity extends AppCompatActivity {
 
     private String emailId;
-    private EditText phoneNumber, dateOfBirth, homeAddress, email, developer, username;
+    private EditText phoneNumber, dateOfBirth, homeAddress, email, username;
     private DatabaseReference userData;
     private FirebaseUser user;
     private Button btnSetup;
     private DatePickerDialog datePickerDialog;
     private int mDate, mMonth, mYear;
-    String img;
+    String img,role;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class UserProfileActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         dateOfBirth = findViewById(R.id.dateOfBirth);
         homeAddress = findViewById(R.id.homeAddress);
-        developer = findViewById(R.id.developer);
         btnSetup = findViewById(R.id.setupProfile);
         emailId = getIntent().getStringExtra("emailId");
         email.setText(emailId);
@@ -65,11 +64,15 @@ public class UserProfileActivity extends AppCompatActivity {
                     String userDob = snapshot.child("Date Of Birth").getValue().toString();
                     dateOfBirth.setText(userDob);
 
-                    String dev = snapshot.child("Developer").getValue().toString();
-                    developer.setText(dev);
-
                     String add = snapshot.child("HomeAddress").getValue().toString();
                     homeAddress.setText(add);
+
+                    String dev= snapshot.child("Developer").getValue().toString();
+                    if(!dev.equals("")){
+                        role=dev;
+                    }
+
+
 
                     String name = snapshot.child("username").getValue().toString();
                     username.setText(name);
@@ -155,12 +158,6 @@ public class UserProfileActivity extends AppCompatActivity {
         else{
             homeAddress.setFocusableInTouchMode(true);
         }
-        if (!developer.getText().toString().trim().isEmpty()) {
-            developer.setFocusable(false);
-        }
-        else{
-            developer.setFocusableInTouchMode(true);
-        }
         if(!email.getText().toString().trim().isEmpty()){
             email.setFocusable(false);
         }
@@ -182,7 +179,7 @@ public class UserProfileActivity extends AppCompatActivity {
         usermap.put("Date Of Birth", dateOfBirth.getText().toString().trim());
         usermap.put("PhoneNumber", phoneNumber.getText().toString().trim());
         usermap.put("HomeAddress", homeAddress.getText().toString().trim());
-        usermap.put("Developer", developer.getText().toString().trim());
+        usermap.put("Developer",role+"");
         usermap.put("username", username.getText().toString().trim());
         usermap.put("email", email.getText().toString().trim());
         usermap.put("userid",user.getUid());

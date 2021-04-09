@@ -57,7 +57,7 @@
         android:icon="@drawable/ic_check_mark"/>
     <item
         android:id="@+id/add_user"
-        android:title="Add User"
+        android:title="Super Admin"
         android:icon="@drawable/ic_myaccount"/>
 
     <item android:id="@+id/logout"

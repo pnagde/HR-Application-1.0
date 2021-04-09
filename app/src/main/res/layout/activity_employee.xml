@@ -10,7 +10,6 @@
     tools:context=".EmployeeActivity">
     <include layout="@layout/custom_toolbar"
         android:id="@+id/tool_emp"/>
-
 <!--    <TextView-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

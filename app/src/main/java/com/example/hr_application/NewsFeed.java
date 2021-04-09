@@ -6,12 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.hr_application.adapters.FeedAdapter;
 import com.example.hr_application.adapters.employeesAdapter;
@@ -86,11 +88,26 @@ public class NewsFeed extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        Intent i=getIntent();
+        if(i.getStringExtra("status").equals("Super Admin")){
+            super.onCreateOptionsMenu(menu);
+        }
+        return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        int id=item.getItemId();
+        switch(id){
+            case R.id.delete_news:
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("newsFeed");
+                databaseReference.removeValue();
+                Toast.makeText(this, "News Feed Cleared", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

@@ -213,18 +213,19 @@
                 android:text="Developer"
                 android:textColor="@color/darkBlue"
                 android:textSize="14sp"/>
-            <EditText
+            <Spinner
+                android:background="@drawable/btn_background"
                 android:id="@+id/editDeveloper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="21dp"
                 android:layout_below="@id/accountDob"
-                android:layout_toRightOf="@id/userDeveloper"
+                android:layout_toEndOf="@id/userDeveloper"
                 android:visibility="invisible"
                 android:fontFamily="monospace"
                 android:singleLine="true"
-                android:hint=""
+                android:hint="Select"
                 android:textColor="@color/neu"
                 android:textSize="14sp"/>
             <View

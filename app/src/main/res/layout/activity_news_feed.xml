@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/newsFeedTool"
-        layout="@layout/custom_toolbar"
+        layout="@layout/toolbar_news"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
