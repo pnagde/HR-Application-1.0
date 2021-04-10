@@ -262,7 +262,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             navHeaderEmail.setText(email);
                             if(snapshot.child("ImageUrl").exists()) {
                                 String url = snapshot.child("ImageUrl").getValue().toString();
-                                loadImage(url);
+                                if (!url.equals("No Profile Image")){
+                                    loadImage(url);
+                                }else {
+                                    loadImage("https://firebasestorage.googleapis.com/v0/b/hr-application-10b16.appspot.com/o/logo_e_city.jpg?alt=media&token=f1f952a8-cd67-4346-935b-ef754ae57928");
+                                }
                             }else{
                                 loadImage("https://firebasestorage.googleapis.com/v0/b/hr-application-10b16.appspot.com/o/logo_e_city.jpg?alt=media&token=f1f952a8-cd67-4346-935b-ef754ae57928");
                             }
@@ -281,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Glide.with(this).load(url).placeholder(R.drawable.logo_circle).into(profile);
             Glide.with(this).load(url).placeholder(R.drawable.logo_circle).into(navProfile);
             cl.dismiss();
+
         } catch (Exception e) {
             e.getStackTrace();
         }

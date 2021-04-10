@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
@@ -134,7 +135,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                   try {
                        String length = (phoneNumber.getText().toString().trim());
                        if (length.length()==10){
                            if (Validate_phone(length)){
@@ -148,10 +148,6 @@ public class UserProfileActivity extends AppCompatActivity {
                            phoneNumber.setError("Number should be 10");
                            btnSetup.setEnabled(false);
                        }
-                   }catch (Exception e){
-                       Log.d("Vinay", "onTextChanged: "+e);
-                   }
-                    
                 }
 
                 @Override
@@ -180,6 +176,10 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void setupProfile() {
+        if (TextUtils.isEmpty(phoneNumber.getText()) || TextUtils.isEmpty(homeAddress.getText()) || TextUtils.isEmpty(email.getText()) || TextUtils.isEmpty(username.getText())){
+            Toast.makeText(this, "Please fill all the fields ", Toast.LENGTH_SHORT).show();
+            return;
+        }
         user = FirebaseAuth.getInstance().getCurrentUser();
         userData = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
         HashMap<String, Object> usermap = new HashMap<>();
