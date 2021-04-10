@@ -109,11 +109,17 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
         btnSetup.setOnClickListener(v -> {
-            if (!username.getText().toString().isEmpty()){
+            if (!username.getText().toString().isEmpty() && phoneNumber.getText().toString().trim().length()==10){
                 setupProfile();
             }
             else{
-                username.setError("Name should not be empty");
+                if (username.getText().toString().isEmpty()){
+                    username.setError("Name should not be empty");
+                }
+                if(phoneNumber.getText().toString().trim().length()!=10){
+                    phoneNumber.setError("Length must 10");
+                }
+
             }
         });
 }
@@ -243,5 +249,15 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         userData.setValue(usermap);
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 }
