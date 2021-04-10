@@ -207,4 +207,16 @@ public class UserProfileActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        setupProfile();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        setupProfile();
+        super.onPause();
+    }
 }

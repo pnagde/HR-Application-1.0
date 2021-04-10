@@ -69,9 +69,9 @@ public class DashboardActivity extends AppCompatActivity {
         btnAddRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String var = role.getText().toString();
+                String var = role.getText().toString().trim();
                 if (validateRole() && !var.isEmpty()) {
-                    addRole(var);
+                    addRole(var.trim());
                 } else if(var.isEmpty()){
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "Role not be empty", Snackbar.LENGTH_LONG);
@@ -82,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void addRole(String var) {
+        role.setText("");
         reference = FirebaseDatabase.getInstance().getReference().child("Role").push();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,7 +120,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private boolean validateRole() {
-        String var=role.getText().toString();
+        String var=role.getText().toString().trim();
         reference = FirebaseDatabase.getInstance().getReference().child("Role");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         for (int i=0;i<roles.size();i++){
-            if (roles.get(i).equals(var)){
+            if (roles.get(i).trim().equals(var)){
                 Toast.makeText(this, "Already Exist", Toast.LENGTH_SHORT).show();
                 return false;
             }
