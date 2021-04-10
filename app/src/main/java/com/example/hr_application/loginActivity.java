@@ -145,6 +145,7 @@ public class loginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(username,password).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                lottieAnimationView.setVisibility(View.INVISIBLE);
                 Toast.makeText(loginActivity.this, "entered email or password not valid", Toast.LENGTH_SHORT).show();
             }
         });

@@ -213,10 +213,35 @@ public class UserProfileActivity extends AppCompatActivity {
         setupProfile();
         super.onBackPressed();
     }
-
     @Override
-    protected void onPause() {
-        setupProfile();
-        super.onPause();
+    protected void onStop() {
+        if (TextUtils.isEmpty(phoneNumber.getText()) || TextUtils.isEmpty(homeAddress.getText()) || TextUtils.isEmpty(email.getText()) || TextUtils.isEmpty(username.getText())){
+            Toast.makeText(this, "Please fill all the fields ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userData = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        HashMap<String, Object> usermap = new HashMap<>();
+        usermap.put("Date Of Birth", dateOfBirth.getText().toString().trim());
+        usermap.put("PhoneNumber", phoneNumber.getText().toString().trim());
+        usermap.put("HomeAddress", homeAddress.getText().toString().trim());
+        usermap.put("Developer",role+"");
+        usermap.put("username", username.getText().toString().trim());
+        usermap.put("email", email.getText().toString().trim());
+        usermap.put("userid",user.getUid());
+        usermap.put("status","");
+        usermap.put("post","Not Mentioned");
+        usermap.put("gender","Not Mentioned");
+        usermap.put("language","Not Mentioned");
+        usermap.put("country","Not Mentioned");
+        usermap.put("points","0");
+        usermap.put("Badges","0");
+        if(img.equals("null")){
+            usermap.put("ImageUrl", "No Profile Image");
+        }else{
+            usermap.put("ImageUrl",img);
+        }
+        userData.setValue(usermap);
+        super.onStop();
     }
 }
