@@ -51,6 +51,7 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.leaveRecord);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //read data leave records from database
         databaseReference = FirebaseDatabase.getInstance().getReference().child("grantLeave");
         Query query = (databaseReference.orderByChild("time"));
         query.addValueEventListener(new ValueEventListener() {
@@ -78,6 +79,7 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
         });
     }
 
+    //search for data records
     private void processSearch(String username) {
         DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("grantLeave");
                 Query query =(d.orderByChild("name").startAt(username).endAt(username+"\uf8ff"));
@@ -108,6 +110,7 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
         });
     }
 
+    //create search view in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.clear_menu,menu);
@@ -129,6 +132,7 @@ public class AllLeaveRecordsActivity extends AppCompatActivity {
         return  super.onCreateOptionsMenu(menu);
     }
 
+    //prompt data clear from leave record database
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

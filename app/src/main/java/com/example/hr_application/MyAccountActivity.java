@@ -38,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class MyAccountActivity extends AppCompatActivity{
 
@@ -49,7 +50,7 @@ public class MyAccountActivity extends AppCompatActivity{
     private ImageView profileImage, save;
     private FirebaseStorage storage;
     private Toolbar toolbar;
-    ArrayList<String> role;
+    HashSet<String> role;
     private String userid,editable;
     private ProgressDialog dialog;
     private StorageReference reference;
@@ -252,7 +253,8 @@ public class MyAccountActivity extends AppCompatActivity{
 
         developer.setVisibility(View.INVISIBLE);
         editDeveloper.setVisibility(View.VISIBLE);
-        role=new ArrayList<>();
+        role=new HashSet<>();
+        ArrayList<String> arrayList=new ArrayList<>();
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Role");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -261,7 +263,10 @@ public class MyAccountActivity extends AppCompatActivity{
                 for (DataSnapshot areaSnapshot: snapshot.getChildren()) {
                      role.add(areaSnapshot.getValue(String.class));
                 }
-                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(MyAccountActivity.this, android.R.layout.simple_spinner_item, role);
+                role.addAll(arrayList);
+                arrayList.clear();
+                arrayList.addAll(role);
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(MyAccountActivity.this, android.R.layout.simple_spinner_item, arrayList);
                 areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 editDeveloper.setAdapter(areasAdapter);
             }
@@ -275,7 +280,7 @@ public class MyAccountActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(role.size()!=0){
-                    userDeveloper=role.get(position);
+                    userDeveloper=arrayList.get(position);
                 }
             }
 

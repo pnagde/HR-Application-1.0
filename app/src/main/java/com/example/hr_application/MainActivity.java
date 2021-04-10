@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView headerName, headerEmail, todayDate, nameUser, navHeaderName, navHeaderEmail;
     private ImageView profile, navProfile;
     private DrawerLayout mDrawer;
+    private boolean not_found=true;
     private attendanceAdapter attendanceAdapter;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
@@ -178,6 +179,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         HideMenu();
+        if (!not_found){
+            startActivity(new Intent(getApplicationContext(),no_data.class));
+            Toast.makeText(MainActivity.this, "Contact HR", Toast.LENGTH_SHORT).show();
+        }
         Calendar todayDateView = Calendar.getInstance();
         String[] a = todayDateView.getTime().toString().split(" ");
         todayDate.setText(a[0] + "\n" + a[1] + " " + a[2] + " " + a[5]);
@@ -416,15 +421,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         AddUser.setVisible(true);
                         status = "Super Admin";
                     }
-                }else{
-                    startActivity(new Intent(MainActivity.this, no_data.class));
-                    Toast.makeText(MainActivity.this, "Contact Admin", Toast.LENGTH_SHORT).show();
+                }
+                if (!snapshot.exists()){
+                    not_found=false;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+                error.getDetails();
             }
         });
     }
@@ -487,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, loginActivity.class));
-                finish();
+                finishAffinity();
                 break;
             case R.id.add_user:
                 startActivity(new Intent(this,DashboardActivity.class));

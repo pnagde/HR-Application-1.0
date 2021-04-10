@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.hr_application.MainActivity;
-import com.example.hr_application.OnClickListenerMain;
 import com.example.hr_application.R;
 import com.example.hr_application.models.TaskModel;
 import com.google.firebase.auth.FirebaseAuth;

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +34,7 @@ public class loginActivity extends AppCompatActivity {
     private TextView username,forgetPassword;
     private TextView password;
     private FirebaseAuth auth;
+    LottieAnimationView lottieAnimationView;
     Button login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class loginActivity extends AppCompatActivity {
         username=findViewById(R.id.emailInput);
         password=findViewById(R.id.passwordInput);
         forgetPassword=findViewById(R.id.forgetPassword);
-        Log.d("ojasla","in");
+        lottieAnimationView=(LottieAnimationView)findViewById(R.id.loginAnime) ;
+        lottieAnimationView.setVisibility(View.INVISIBLE);
         login = (Button) findViewById(R.id.login);
         auth = FirebaseAuth.getInstance();
         forgetPassword.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +56,8 @@ public class loginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                lottieAnimationView.playAnimation();
                 String usernameInput=username.getText().toString();
                 String passwordInput=password.getText().toString();
                 if(!(usernameInput.trim().equals("")||passwordInput.trim().equals(""))) {
@@ -130,6 +135,7 @@ public class loginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(username , password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                lottieAnimationView.setVisibility(View.GONE);
                     Toast.makeText(loginActivity.this, "log-in successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(loginActivity.this, UserProfileActivity.class).putExtra("emailId", emailId));
                     finish();

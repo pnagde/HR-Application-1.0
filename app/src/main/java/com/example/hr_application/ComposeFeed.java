@@ -36,7 +36,7 @@ public class ComposeFeed extends AppCompatActivity {
     Calendar calendar;
     EditText txtContent;
     FloatingActionButton send;
-    String uid,purl,name,developer,key;
+    String uid,purl="null",name,developer,key;
     Intent intent;
     Toolbar toolbar;
 

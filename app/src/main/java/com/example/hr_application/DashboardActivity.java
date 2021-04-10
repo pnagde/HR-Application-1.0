@@ -23,41 +23,42 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DashboardActivity extends AppCompatActivity
-{
+public class DashboardActivity extends AppCompatActivity {
     Toolbar toolbar;
-    EditText role,email,pass;
+    EditText role, email, pass;
     DatabaseReference reference;
-    Button btnAddUser,btnAddRole;
+    Button btnAddUser, btnAddRole;
     FirebaseAuth auth;
+    private ArrayList<String> roles;
     CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        toolbar=findViewById(R.id.dash_tool);
+        toolbar = findViewById(R.id.dash_tool);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Super Admin");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        role=(EditText)findViewById(R.id.roleEdit);
-        email=(EditText)findViewById(R.id.email);
-        pass=(EditText)findViewById(R.id.password);
-        btnAddRole=(Button)findViewById(R.id.btnRole);
-        btnAddUser=(Button)findViewById(R.id.addEmpBtn);
-        coordinatorLayout=(CoordinatorLayout)findViewById(R.id.coordinatorlayout);
+        role = (EditText) findViewById(R.id.roleEdit);
+        email = (EditText) findViewById(R.id.email);
+        pass = (EditText) findViewById(R.id.password);
+        btnAddRole = (Button) findViewById(R.id.btnRole);
+        btnAddUser = (Button) findViewById(R.id.addEmpBtn);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorlayout);
 
+        roles=new ArrayList<>();
 
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()){
+                if (validate()) {
                     addUser();
-                }
-                else{
+                } else {
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "Fill details Carefully", Snackbar.LENGTH_LONG);
                     snackbar.show();
@@ -68,11 +69,10 @@ public class DashboardActivity extends AppCompatActivity
         btnAddRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String var=role.getText().toString();
-                if(!var.isEmpty()){
+                String var = role.getText().toString();
+                if (validateRole() && !var.isEmpty()) {
                     addRole(var);
-                }
-                else {
+                } else if(var.isEmpty()){
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "Role not be empty", Snackbar.LENGTH_LONG);
                     snackbar.show();
@@ -82,12 +82,13 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void addRole(String var) {
-        reference=FirebaseDatabase.getInstance().getReference().child("Role").push();
+        reference = FirebaseDatabase.getInstance().getReference().child("Role").push();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reference.setValue(var);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 error.getDetails();
@@ -95,46 +96,75 @@ public class DashboardActivity extends AppCompatActivity
         });
     }
 
-    private boolean validate()
-    {
-        String emailInput=email.getText().toString().trim();
-        String passwordInput=pass.getText().toString().trim();
-        if(emailInput.isEmpty()){
+    private boolean validate() {
+        String emailInput = email.getText().toString().trim();
+        String passwordInput = pass.getText().toString().trim();
+        if (emailInput.isEmpty()) {
             email.setError("Not Empty");
             return false;
         }
-        if (!emailInput.contains("@")){
+        if (!emailInput.contains("@")) {
             email.setError("Not Valid");
             return false;
         }
-        if (passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             email.setError("Not Empty");
             return false;
         }
-        if(passwordInput.length()<6){
+        if (passwordInput.length() < 6) {
             email.setError("Password Length should be 6");
             return false;
         }
         return true;
     }
 
-    private void addUser()
-    {
-        String em=email.getText().toString().trim();
-        String pa=pass.getText().toString().trim();
-        auth=FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(em,pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    private boolean validateRole() {
+        String var=role.getText().toString();
+        reference = FirebaseDatabase.getInstance().getReference().child("Role");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                roles.clear();
+                for (DataSnapshot areaSnapshot : snapshot.getChildren()) {
+                    roles.add(areaSnapshot.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        for (int i=0;i<roles.size();i++){
+            if (roles.get(i).equals(var)){
+                Toast.makeText(this, "Already Exist", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void addUser() {
+        String em = email.getText().toString().trim();
+        String pa = pass.getText().toString().trim();
+        auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(em, pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "User Added", Snackbar.LENGTH_LONG);
                     snackbar.show();
-                }if(!em.contains("@")){
+                    email.setText("");
+                    pass.setText("");
+                }
+                if (!em.contains("@")) {
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "Email does not Exist", Snackbar.LENGTH_LONG);
                     snackbar.show();
-                } if(!task.isSuccessful()){
+                }
+                if (!task.isSuccessful()) {
                     Snackbar snackbar = Snackbar
                             .make(coordinatorLayout, "User Already Exist", Snackbar.LENGTH_LONG);
                     snackbar.show();

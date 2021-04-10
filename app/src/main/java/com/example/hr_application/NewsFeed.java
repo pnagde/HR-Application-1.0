@@ -30,7 +30,7 @@ import java.util.Collections;
 
 public class NewsFeed extends AppCompatActivity {
     Toolbar toolbar;
-    String uid;
+    String uid,status="";
     RecyclerView newsFeed;
     ArrayList<Feed> news = new ArrayList<>();
     final private String TAG="NewsFeed";
@@ -41,10 +41,11 @@ public class NewsFeed extends AppCompatActivity {
         setContentView(R.layout.activity_news_feed);
         Intent intent=getIntent();
         uid=intent.getStringExtra("uid");
+        status=intent.getStringExtra("status");
         toolbar=(Toolbar) findViewById(R.id.newsFeedTool);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("News Feed");
         newsFeed=(RecyclerView)findViewById(R.id.recycle_news);
         newsFeed.setHasFixedSize(true);
@@ -83,13 +84,18 @@ public class NewsFeed extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         finish();
-        return super.onSupportNavigateUp();
+        return true;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Intent i=getIntent();
-        if(i.getStringExtra("status").equals("Super Admin")){
+
+        if (status!=null){
+            if (status.toLowerCase().equals("super admin")){
+                getMenuInflater().inflate(R.menu.news, menu);
+            }
+        }
+        else {
             super.onCreateOptionsMenu(menu);
         }
         return true;
@@ -109,5 +115,10 @@ public class NewsFeed extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

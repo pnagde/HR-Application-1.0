@@ -107,8 +107,15 @@ public class UserProfileActivity extends AppCompatActivity {
 
         });
 
-        btnSetup.setOnClickListener(v -> setupProfile());
-    }
+        btnSetup.setOnClickListener(v -> {
+            if (!username.getText().toString().isEmpty()){
+                setupProfile();
+            }
+            else{
+                username.setError("Name should not be empty");
+            }
+        });
+}
     private boolean Validate_phone(String number) {
         Pattern p = Pattern.compile("[6-9][0-9]{9}");
         Matcher m =p.matcher(number);
