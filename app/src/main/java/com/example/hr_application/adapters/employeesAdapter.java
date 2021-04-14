@@ -96,6 +96,7 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
                                             public void onSuccess(Void aVoid) {
                                                 Log.d("uidEmployee", "onSuccess: "+model1.getUserid());
                                                 deleteFromteam(model1.getUserid());
+                                                Toast.makeText(context, model1.getUsername()+" removed.", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
@@ -129,7 +130,7 @@ public class employeesAdapter extends RecyclerView.Adapter<employeesAdapter.empl
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("uidEmployee", "onSuccess1: "+model1);
-                                            Toast.makeText(context, "Deleted all.", Toast.LENGTH_SHORT).show();
+
                                         }
                                     });
                             break;

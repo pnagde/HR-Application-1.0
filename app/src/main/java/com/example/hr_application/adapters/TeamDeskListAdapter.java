@@ -45,7 +45,7 @@ public class TeamDeskListAdapter extends RecyclerView.Adapter<TeamDeskListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull TeamListViewHolder holder, int position) {
-        Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
         TeamDeskListModel model = listModels.get(position);
         holder.name.setText(model.getTeamName());
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -60,7 +60,7 @@ public class TeamDeskListAdapter extends RecyclerView.Adapter<TeamDeskListAdapte
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseDatabase.getInstance().getReference().child("teams").child(model.getKey()).removeValue()
                                     .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(context, "Team deleted", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, model.getTeamName()+" Team deleted", Toast.LENGTH_SHORT).show();
                                     });
                         }
                     });
