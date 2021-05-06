@@ -111,10 +111,13 @@ public class NewsFeed extends AppCompatActivity {
                 databaseReference.removeValue();
                 Toast.makeText(this, "News Feed Cleared", Toast.LENGTH_SHORT).show();
                 break;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 break;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

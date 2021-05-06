@@ -481,9 +481,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "ECV Job Application");
-                    String shareMessage = "Share your RESUME with us to get a role in E-City Vibes : http://ecityvibes.com/\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(intent, "share by"));
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("job link");
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String shareMessage = "Share your RESUME with us to get a role in E-City Vibes :"+ snapshot.getValue()+"\n";
+                            intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                            startActivity(Intent.createChooser(intent, "share by"));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     break;
                 } catch (Exception e) {
                     e.getStackTrace();
@@ -577,7 +589,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         date.add(model.getDate());
                     if (date != null) {
                         for (int i = 1; i < date.size(); i++) {
-
                             String[] m = date.get(i).split("/");
                             Log.d(TAG, "onDataChange: " + m[0]);
                             dateHashMap.put(Integer.parseInt(m[0]), "p");
@@ -609,7 +620,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void EmptyListAnimation() throws InterruptedException {
-//        sleep(1100);
         if (taskList.isEmpty()) {
             empty.setVisibility(View.VISIBLE);
             empty.setSpeed(1);
